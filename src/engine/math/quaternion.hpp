@@ -11,7 +11,7 @@ namespace fr::math {
 
             Quaternion(float x, float y, float z, float w);
             Quaternion(Vector4 m);
-            Quaternion(Vector3& axis, float angle);
+            Quaternion(Vector3 axis, float angle);
 
             // operators 
             Quaternion operator=(Quaternion q);

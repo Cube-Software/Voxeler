@@ -15,7 +15,7 @@ namespace fr::math {
         (*this).w = m.w;
     }
 
-    Quaternion::Quaternion(Vector3& axis, float angle) {
+    Quaternion::Quaternion(Vector3 axis, float angle) {
         float HalfSin = sine(angle / 2);
         float HalfCos = cosine(angle / 2);
         (*this).x = axis.x * HalfSin;
