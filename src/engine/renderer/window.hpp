@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../fr.hpp"
+#include "../math/vectors.hpp"
 
 namespace fr::renderer {
 	class frwindow {

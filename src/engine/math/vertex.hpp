@@ -7,7 +7,7 @@ namespace fr::renderer {
         math::Vector3 position;
         math::Vector3 normal;
         math::Vector3 tangent;
-        math::Vector3 Bitangent;
-        math::Vector2 TexCoords;
+        math::Vector3 bitangent;
+        math::Vector2 coords;
     };
 }

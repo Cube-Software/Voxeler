@@ -8,7 +8,7 @@ namespace fr::math {
         Vector4() : x(0.0f), y(0.0f), z(0.0f), w(0.0f) {}
         Vector4(float X,float Y,float Z,float W) : x(X), y(Y), z(Z), w(W) {}
         Vector4(float number) : x(number), y(number), z(number), w(number) {}
-        Vector4(Vector4& other) : x(other.x), y(other.y), z(other.z), w(other.w) {}
+        Vector4(const Vector4& other) : x(other.x), y(other.y), z(other.z), w(other.w) {}
 
         float Length() { return sqrt(x*x + y*y + z*z + w*w); }
 
@@ -51,7 +51,7 @@ namespace fr::math {
         Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
         Vector3(float X,float Y,float Z) : x(X), y(Y), z(Z) {}
         Vector3(float number) : x(number), y(number), z(number) {}
-        Vector3(Vector3& other) : x(other.x), y(other.y), z(other.z) {}
+        Vector3(const Vector3& other) : x(other.x), y(other.y), z(other.z) {}
 
         float Length() { return sqrt(x*x + y*y + z*z); }
 
@@ -92,23 +92,24 @@ namespace fr::math {
     class Vector2 {
         public:
         Vector2() : x(0.0f), y(0.0f) {}
-        Vector2(float X,float Y) : x(X), y(Y) {}
+        Vector2(const float _x, const float _y) : x(_x), y(_y) {}
         Vector2(float number) : x(number), y(number) {}
-        Vector2(Vector2& other) : x(other.x), y(other.y) {}
+        Vector2(const Vector2& other) : x(other.x), y(other.y) {}
+        ~Vector2() = default;
 
         float Length() { return sqrt(x*x + y*y); }
 
-        Vector2 operator+(const Vector2& other) { return Vector2(x + other.x, y + other.y); }
-        Vector2 operator+(float other) { return Vector2(x + other, y + other); }
+        const Vector2 operator+(const Vector2& other) { return Vector2(x + other.x, y + other.y); }
+        const Vector2 operator+(float other) { return Vector2(x + other, y + other); }
          
-        Vector2 operator-(const Vector2& other) { return Vector2(x - other.x, y - other.y); }
-        Vector2 operator-(float other) { return Vector2(x - other, y - other); }
+        const Vector2 operator-(const Vector2& other) { return Vector2(x - other.x, y - other.y); }
+        const Vector2 operator-(float other) { return Vector2(x - other, y - other); }
 
-        Vector2 operator/(const Vector2& other) { return Vector2(x / other.x, y / other.y); }
-        Vector2 operator/(float other) { return Vector2(x / other, y / other); }
+        const Vector2 operator/(const Vector2& other) { return Vector2(x / other.x, y / other.y); }
+        const Vector2 operator/(float other) { return Vector2(x / other, y / other); }
 
-        Vector2 operator*(const Vector2& other) { return Vector2(x * other.x, y * other.y); }
-        Vector2 operator*(float other) { return Vector2(x * other, y * other); }
+        const Vector2 operator*(const Vector2& other) { return Vector2(x * other.x, y * other.y); }
+        const Vector2 operator*(float other) { return Vector2(x * other, y * other); }
 
         void operator=(float other) { x = other; y = other; }
         void operator=(Vector2 other) { x = other.x; y = other.y; }

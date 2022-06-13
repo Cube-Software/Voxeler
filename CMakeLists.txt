@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(Voxeler)
+set(CXX_STANDARD 17)
 
 if(WIN32)
 add_subdirectory(3rdparty/glfw)
