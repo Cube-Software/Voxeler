@@ -8,6 +8,8 @@ add_subdirectory(3rdparty/glfw)
 add_subdirectory(3rdparty/glad)
 add_subdirectory(3rdparty/assimp)
 add_subdirectory(3rdparty/tinyxml2)
+add_subdirectory(3rdparty/openal-soft)
+add_subdirectory(3rdparty/libsndfile)
 endif(WIN32) 
 
 include_directories(3rdparty/)

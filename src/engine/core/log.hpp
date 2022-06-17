@@ -13,8 +13,8 @@ namespace fr {
 		inline void ErrorLog(std::string log) { std::cout << termcolor::red << "[ERROR] " << log << termcolor::white << std::endl; }
 		inline void WarnLog(std::string log) { std::cout << termcolor::bright_magenta << "[WARN] " << log << termcolor::white << std::endl; }
 		inline void InfoLog(std::string log) {
-		#ifndef FR_BULID
-			std::cout << "[" << termcolor::bright_green << " OK " << "] " << termcolor::white << log.CString() << std::endl; 
+		#ifndef FR_BUILD
+			std::cout << "[" << termcolor::bright_green << " OK " << "] " << termcolor::white << log << std::endl; 
 		#endif
 		}
 	}
