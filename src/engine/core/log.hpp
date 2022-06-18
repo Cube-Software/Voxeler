@@ -1,4 +1,5 @@
-#pragma once
+#ifndef LOG
+#define LOG
 
 #include "../fr.hpp"
 #include "../vendor/termcolor.hpp"
@@ -21,3 +22,4 @@ namespace fr::log {
 #define FR_INFO(...) fr::Log::InfoLog(__VA_ARGS__)
 #define FR_ERROR(...) fr::Log::ErrorLog(__VA_ARGS__)
 #define FR_WARNING(...) fr::Log::WarnLog(__VA_ARGS__)
+#endif

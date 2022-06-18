@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENTITY
+#define ENTITY
 
 #include "entitymanager.hpp"
 
@@ -46,3 +47,5 @@ namespace fr::ecs {
 		EntityID ID;
 	};
 }
+
+#endif

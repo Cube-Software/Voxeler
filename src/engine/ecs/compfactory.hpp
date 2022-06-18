@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMPFACTORY
+#define COMPFACTORY
 
 #include "basecomp.hpp"
 
@@ -55,3 +56,5 @@ namespace fr::ecs {
     };
 
 }
+
+#endif

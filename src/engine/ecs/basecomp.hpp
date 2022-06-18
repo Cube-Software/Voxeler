@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BASECOMP
+#define BASECOMP
 
 #include "ecstypes.hpp"
 
@@ -14,3 +15,5 @@ namespace fr::ecs {
 		friend class EntityManager;
 	};
 }
+
+#endif

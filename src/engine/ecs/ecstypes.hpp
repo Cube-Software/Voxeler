@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ECS_TYPES
+#define ECS_TYPES
 
 #include "../fr.hpp"
 
@@ -43,3 +44,5 @@ namespace fr::ecs {
 		return typeID;
 	}
 }
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef BASESYSTEM
+#define BASESYSTEM
 
 #include "ecstypes.hpp"
 
@@ -30,3 +31,4 @@ namespace fr::ecs {
 		std::set<EntityID> entities;
 	};
 }
+#endif

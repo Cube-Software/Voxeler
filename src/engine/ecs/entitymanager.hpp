@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ENTITY_MANAGER
+#define ENTITY_MANAGER
 
 #include "ecstypes.hpp"
 #include "complist.hpp"
@@ -257,3 +258,5 @@ namespace fr::ecs {
 
 	static EntityManager& Manager = ECS::EntityManager::Ref();
 }
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef COMPLIST
+#define COMPLIST
 
 #include "ecstypes.hpp"
 
@@ -47,3 +48,5 @@ namespace fr::ecs {
 		std::vector<T> data;		
 	};
 }
+
+#endif
