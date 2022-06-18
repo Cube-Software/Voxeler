@@ -10,6 +10,7 @@ add_subdirectory(3rdparty/assimp)
 add_subdirectory(3rdparty/tinyxml2)
 add_subdirectory(3rdparty/openal-soft)
 add_subdirectory(3rdparty/libsndfile)
+add_subdirectory(3rdparty/sol2)
 endif(WIN32) 
 
 include_directories(3rdparty/)
