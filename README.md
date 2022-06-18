@@ -21,14 +21,14 @@ Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href=
 * libsndfile https://github.com/libsndfile/libsndfile
 * sol2 https://github.com/ThePhD/sol2.git
 
-## installing dependencies
+## Installing the dependencies
 * Debian/Ubuntu ` $ sudo apt install -y libglfw3-dev libassimp-dev libtinyxml-dev libsndfile-dev libopenal-dev`
 * Fedora ` $ sudo dnf install assimp-devel glfw-devel tinyxml2-devel openal-soft libsndfile`
 
-## installing cmake
+## Installing CMake
 * Debian/Ubuntu ` $ sudo apt-get install cmake `
 * Fedora ` $ sudo dnf install cmake `
 
-## build
+## Build
 * run `$ cmake -B build'
-* then compile it with your fav tool
+* ...and then compile it with your favorite tool
