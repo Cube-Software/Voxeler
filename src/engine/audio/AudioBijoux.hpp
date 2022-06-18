@@ -1,9 +1,8 @@
 
 
 /*
-    AudioBijoux - A very simple OpenAL-based audio engine
-    Created by MCL for PogoBijoux
-    Revised for Voxeler
+    AudioVoxelaux - A very simple OpenAL-based audio engine
+    Created by MCL
 
     -------------------------------
     Copyright (c) 2021-2022 MCL Software
@@ -19,11 +18,14 @@
 #include <sndfile.h>
 #include "log.hpp"
 
-namespace fr::audio{
-	class AudioBijoux{
+namespace fr::audio
+{
+	class AudioVoxelaux
+	{
 		private:		
 			ALCdevice *device;
 			ALuint source;
+			ALuint source1;
 			ALuint musicSource;
 			ALuint buffer;
 			ALCcontext *context;
@@ -33,14 +35,14 @@ namespace fr::audio{
 			{
 				ALCenum error = alGetError();
 				if (error != AL_NO_ERROR)
-					printf("\nAudioBijoux: An error occurred!\n");
+					printf("\nAudioVoxelaux: An error occurred!\n");
 				else
-					printf("\nAudioBijoux: OK\n");
+					printf("\nAudioVoxelaux: OK\n");
 			}
 
 			void initAudioEngine()
 			{
-				printf("\n---------------------------------\nAudioBijoux has been initialized!\n---------------------------------\n");
+				printf("\n---------------------------------\nAudioVoxelaux has been initialized!\n---------------------------------\n");
 
 				// Open device
 				device = alcOpenDevice(0);
@@ -78,8 +80,23 @@ namespace fr::audio{
 						alSource3f(source, AL_VELOCITY, 0, 0, 0);
 						checkForErrors();
 
+						// Create the second sound effect source
+						alGenSources((ALuint)1, &source1);
+						checkForErrors();
+
+						alSourcef(source1, AL_PITCH, 1);
+						checkForErrors();
+
+						alSourcef(source1, AL_GAIN, 1);
+						checkForErrors();
+
+						alSource3f(source1, AL_POSITION, 0, 0, 0);
+						checkForErrors();
+
+						alSource3f(source1, AL_VELOCITY, 0, 0, 0);
+						checkForErrors();
+
 						// Create the music source
-						// Create the source
 						alGenSources((ALuint)1, &musicSource);
 						checkForErrors();
 
@@ -110,6 +127,7 @@ namespace fr::audio{
 				}*/
 
 				alDeleteSources(1, &source);
+				alDeleteSources(1, &source1);
 				alDeleteSources(1, &musicSource);
 				alDeleteBuffers(1, &buffer);
 				device = alcGetContextsDevice(context);
@@ -120,22 +138,28 @@ namespace fr::audio{
 
 			ALuint playSound(int sourceToUse, int loop, ALuint buffer)
 			{
-				if(sourceToUse)
+				switch(sourceToUse)
 				{
-					alSourceStop(source); // Stop the sound that's currently playing
+					case 0:
+						alSourceStop(musicSource); // Stop the music that's currently playing.
 
-					alSourcei(source, AL_LOOPING, loop); // Make the sound looped / not looped
-					alSourcei(source, AL_BUFFER, buffer); // Add buffer to source
-					alSourcePlay(source); // Play the sound
-				}
+						alSourcei(musicSource, AL_LOOPING, loop); // Make the sound looped / not looped
+						alSourcei(musicSource, AL_BUFFER, buffer); // Add buffer to source
+						alSourcePlay(musicSource); // Play the music
 
-				else
-				{
-					alSourceStop(musicSource); // Stop the music that's currently playing.
+					case 1:
+						alSourceStop(source); // Stop the sound that's currently playing
 
-					alSourcei(musicSource, AL_LOOPING, loop); // Make the sound looped / not looped
-					alSourcei(musicSource, AL_BUFFER, buffer); // Add buffer to source
-					alSourcePlay(musicSource); // Play the music
+						alSourcei(source, AL_LOOPING, loop); // Make the sound looped / not looped
+						alSourcei(source, AL_BUFFER, buffer); // Add buffer to source
+						alSourcePlay(source); // Play the sound
+
+					case 2:
+						alSourceStop(source1); // Stop the sound that's currently playing
+
+						alSourcei(source1, AL_LOOPING, loop); // Make the sound looped / not looped
+						alSourcei(source1, AL_BUFFER, buffer); // Add buffer to source
+						alSourcePlay(source1); // Play the sound
 				}
 
 			}
