@@ -30,5 +30,5 @@ Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href=
 * Fedora ` $ sudo dnf install cmake `
 
 ## Build
-* run `$ cmake -B build'
+* run ` $ cmake -B build `
 * ...and then compile it with your favorite tool
