@@ -30,9 +30,19 @@ namespace fr::audio
 			ALuint buffer;
 			ALCcontext *context;
 
-			void voxelauxLogToFile(std::string logText)
+			void voxelauxLogToFile(std::string logText, int type)
 			{
-				fr::log::InfoLog("Voxelaux says, \"" + logText + "\"");
+				switch(type)
+				{
+					case 1:
+						fr::log::WarnLog("Warning from Voxelaux: " + logText + "\n");
+
+					case 2:
+						fr::log::ErrorLog("Voxelaux has ran into the following error: " + logText + "\n");
+						
+					default:
+						fr::log::InfoLog("Voxelaux says, \"" + logText + "\"\n");
+				}
 			}
 
 		public:
@@ -40,19 +50,20 @@ namespace fr::audio
 			{
 				ALCenum error = alGetError();
 				if (error != AL_NO_ERROR)
-					printf("\nAudioVoxelaux: An error occurred!\n");
+					voxelauxLogToFile("OpenAL Error; alGetError() returned false!", 2);
 				else
-					printf("\nAudioVoxelaux: OK\n");
+					voxelauxLogToFile("All good.", 0);
 			}
 
 			void initAudioEngine()
 			{
-				printf("\n---------------------------------\nAudioVoxelaux has been initialized!\n---------------------------------\n");
+				fr::log::InfoLog("
+				\n---------------------------------\nAudioVoxelaux by MCL Software\nAudioVoxelaux has been initialized!\n---------------------------------\n");
 
 				// Open device
 				device = alcOpenDevice(0);
 				if(!device)
-					prf("\nFailed to open device.\n");
+					voxelauxLogToFile("Failed to open audio device.", 2);
 
 				else
 				{
@@ -62,7 +73,7 @@ namespace fr::audio
 					if(!alcMakeContextCurrent(context))
 					{
 						// TODO: Add more specific error messages using alGetError()
-						printf("\nFailed to make the context current.\n");
+						voxelauxLogToFile("Failed to make the context current.", 2);
 						checkForErrors();
 					}
 					else
@@ -181,23 +192,23 @@ namespace fr::audio
 				// Try to open and decode the passed file path
 				sndFile = sf_open(path, SFM_READ, &sfInfo);
 				if(!sndFile)
-					printf("\nERROR: Couldn't open file %s\n", path);
+					voxelauxLogToFile("Couldn't open file" + path, 2);
 				else
-					printf("\nOK: File loaded successfully!");
+					voxelauxLogToFile("OK: File loaded successfully!", 0);
 
 				if(sfInfo.channels == 1)
 				{
-					printf("\nOK: File has 1 channel.\n");
+					voxelauxLogToFile("OK: File has 1 channel.", 0);
 					format = AL_FORMAT_MONO16; // One channel, 16-bits
 				}
 				else if(sfInfo.channels == 2)
 				{
-					printf("\nOK: File has 2 channels.\n");
+					voxelauxLogToFile("OK: File has 2 channels.", 0);
 					format = AL_FORMAT_STEREO16;
 				}
 				else
 				{
-					printf("\nERROR: Unknown # of channels.\n");
+					voxelauxLogToFile("Unknown # of channels.", 2);
 				}
 
 				memoryBuffer = malloc((size_t)(sfInfo.frames * sfInfo.channels) * sizeof(short));
