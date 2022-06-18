@@ -1,4 +1,4 @@
-#pragma once
+
 
 /*
     AudioBijoux - A very simple OpenAL-based audio engine
@@ -12,12 +12,12 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-// Taken from PogoBijoux; the game that all my friends like
 
 #include <AL/al.h>
 #include <AL/alc.h>
 #include <stdlib.h>
 #include <sndfile.h>
+#include "log.hpp"
 
 namespace fr::audio{
 	class AudioBijoux{
@@ -45,7 +45,7 @@ namespace fr::audio{
 				// Open device
 				device = alcOpenDevice(0);
 				if(!device)
-					printf("\nFailed to open device.\n");
+					prf("\nFailed to open device.\n");
 
 				else
 				{
