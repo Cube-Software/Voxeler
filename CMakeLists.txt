@@ -13,9 +13,13 @@ add_subdirectory(3rdparty/libsndfile)
 add_subdirectory(3rdparty/sol2)
 endif(WIN32) 
 
-include_directories(3rdparty/)
-include_directories(src/fr)
-include_directories(src)
+include_directories(3rdparty/sol2/include)
+include_directories(3rdparty/glfw/include)
+include_directories(3rdparty/assimp/include)
+include_directories(3rdparty/tinyxml2)
+include_directories(3rdparty/openal-soft/include)
+include_directories(3rdparty/libsndfile/include)
+include_directories(3rdparty/glad/include)
 
 file(GLOB_RECURSE Sources "src/**.cpp" "src/**.h")
 
