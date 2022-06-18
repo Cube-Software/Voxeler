@@ -30,6 +30,11 @@ namespace fr::audio
 			ALuint buffer;
 			ALCcontext *context;
 
+			void voxelauxLogToFile(std::string logText)
+			{
+				fr::log::InfoLog("Voxelaux says, \"" + logText + "\"");
+			}
+
 		public:
 			void checkForErrors()
 			{
