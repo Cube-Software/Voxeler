@@ -28,16 +28,18 @@
 
 #if defined(_WIN32)
 #include <windows.h>
+#define DLLAPI __declspec(dllexport)
 #elif defined(__linux__)
 #include <bits/stdc++.h>
+#define DLLAPI
 #else
 #warning Not Supported Platform!
 #endif
 
 #ifdef _WIN32
-    #define ASSERT(boolean) if (!(boolean)) __debugbreak();
+#define ASSERT(boolean) if (!(boolean)) __debugbreak();
 #else
-    #define ASSERT(boolean) if (!(boolean)) raise(SIGTRAP);
+#define ASSERT(boolean) if (!(boolean)) raise(SIGTRAP);
 #endif
 
 #define GLCALL(func) GLClearError(); func; ASSERT(fr::GLLogCall(#func, __FILE__, __LINE__))

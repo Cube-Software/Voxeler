@@ -21,5 +21,10 @@
 	
 [submodule "Engine/Thirdparty/cmake/openal-soft"]
 	path = 3rdparty/openal-soft
-	url = https://github.com/kcat/openal-soft
+	url = https://github.com/kcat/openal-soft.git
+	branch = master
+	
+[submodule "Engine/Thirdparty/cmake/sol2"]
+	path = 3rdparty/sol2
+	url = https://github.com/ThePhD/sol2.git
 	branch = master
