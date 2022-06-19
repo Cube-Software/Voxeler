@@ -19,8 +19,7 @@
 #include <AL/alc.h>
 #include <stdlib.h>
 #include <sndfile.h>
-#include "log.hpp"
-
+#include "../core/log.hpp"
 namespace fr::audio
 {
 	class AudioVoxelaux
@@ -49,115 +48,96 @@ namespace fr::audio
 			}
 
 		public:
-			void checkForErrors()
+			AudioVoxelaux()
 			{
-				ALCenum error = alGetError();
-				if (error != AL_NO_ERROR)
-					voxelauxLogToFile("OpenAL Error; alGetError() returned false!", 2);
-				else
-					voxelauxLogToFile("All good.", 0);
-			}
-
-			void initAudioEngine()
-			{
-				fr::log::InfoLog("
-				\n---------------------------------\nAudioVoxelaux by MCL Software\nAudioVoxelaux has been initialized!\n---------------------------------\n");
-
-				// Open device
-				device = alcOpenDevice(0);
+				device = alcOpenDevice(NULL);
 				if(!device)
-					voxelauxLogToFile("Failed to open audio device.", 2);
-
-				else
 				{
-					// Create context
-					context = alcCreateContext(device, 0);
-
-					if(!alcMakeContextCurrent(context))
-					{
-						// TODO: Add more specific error messages using alGetError()
-						voxelauxLogToFile("Failed to make the context current.", 2);
-						checkForErrors();
-					}
-					else
-					{
-						// TODO: Define some other listener properties (i.e. position, orientation, etc.)
-
-						// Create the sound effect source
-						alGenSources((ALuint)1, &source);
-						checkForErrors();
-
-						alSourcef(source, AL_PITCH, 1);
-						checkForErrors();
-
-						alSourcef(source, AL_GAIN, 1);
-						checkForErrors();
-
-						alSource3f(source, AL_POSITION, 0, 0, 0);
-						checkForErrors();
-
-						alSource3f(source, AL_VELOCITY, 0, 0, 0);
-						checkForErrors();
-
-						// Create the second sound effect source
-						alGenSources((ALuint)1, &source1);
-						checkForErrors();
-
-						alSourcef(source1, AL_PITCH, 1);
-						checkForErrors();
-
-						alSourcef(source1, AL_GAIN, 1);
-						checkForErrors();
-
-						alSource3f(source1, AL_POSITION, 0, 0, 0);
-						checkForErrors();
-
-						alSource3f(source1, AL_VELOCITY, 0, 0, 0);
-						checkForErrors();
-
-						// Create the music source
-						alGenSources((ALuint)1, &musicSource);
-						checkForErrors();
-
-						alSourcef(musicSource, AL_PITCH, 1);
-						checkForErrors();
-
-						alSourcef(musicSource, AL_GAIN, 1);
-						checkForErrors();
-
-						alSource3f(musicSource, AL_POSITION, 0, 0, 0);
-						checkForErrors();
-
-						alSource3f(musicSource, AL_VELOCITY, 0, 0, 0);
-						checkForErrors();
-
-
-					}
+					voxelauxLogToFile("Failed to open audio device", 2);
+					return;
 				}
+				context = alcCreateContext(device, NULL);
+				if(!context)
+				{
+					voxelauxLogToFile("Failed to create audio context", 2);
+					return;
+				}
+				else{
+					alGenSources((ALuint)1, &source);
+					checkForErrors();
+
+					alSourcef(source, AL_PITCH, 1);
+					checkForErrors();
+
+					alSourcef(source, AL_GAIN, 1);
+					checkForErrors();
+
+					alSource3f(source, AL_POSITION, 0, 0, 0);
+					checkForErrors();
+
+					alSource3f(source, AL_VELOCITY, 0, 0, 0);
+					checkForErrors();
+
+					// Create the second sound effect source
+					alGenSources((ALuint)1, &source1);
+					checkForErrors();
+
+					alSourcef(source1, AL_PITCH, 1);
+					checkForErrors();
+
+					alSourcef(source1, AL_GAIN, 1);
+					checkForErrors();
+
+					alSource3f(source1, AL_POSITION, 0, 0, 0);
+					checkForErrors();
+
+					alSource3f(source1, AL_VELOCITY, 0, 0, 0);
+					checkForErrors();
+
+					// Create the music source
+					alGenSources((ALuint)1, &musicSource);
+					checkForErrors();
+
+					alSourcef(musicSource, AL_PITCH, 1);
+					checkForErrors();
+
+					alSourcef(musicSource, AL_GAIN, 1);
+					checkForErrors();
+
+					alSource3f(musicSource, AL_POSITION, 0, 0, 0);
+					checkForErrors();
+
+					alSource3f(musicSource, AL_VELOCITY, 0, 0, 0);
+					checkForErrors();
+				}
+				alcMakeContextCurrent(context);
+				alGenSources(1, &source);
+				alGenSources(1, &source1);
+				alGenSources(1, &musicSource);
+				alGenBuffers(1, &buffer);
+				voxelauxLogToFile("Voxelaux has been initialized", 1);
 			}
 
-			int stopAudioEngine()
+			~AudioVoxelaux()
 			{
-				ALenum sourceState;
-				alGetSourcei(source, AL_SOURCE_STATE, &sourceState);
-				/*while(sourceState == AL_PLAYING)
-				{
-					alGetSourcei(source, AL_SOURCE_STATE, &sourceState);
-				}*/
-
 				alDeleteSources(1, &source);
 				alDeleteSources(1, &source1);
 				alDeleteSources(1, &musicSource);
 				alDeleteBuffers(1, &buffer);
-				device = alcGetContextsDevice(context);
-				alcMakeContextCurrent(0);
 				alcDestroyContext(context);
 				alcCloseDevice(device);
+				voxelauxLogToFile("Voxelaux has been destroyed", 1);
 			}
-
-			ALuint playSound(int sourceToUse, int loop, ALuint buffer)
-			{
-				switch(sourceToUse)
+			ALuint playSound(ALuint sourceToUse, int loop, ALuint buffer){
+				ALuint source = sourceToUse;
+				alSourcei(source, AL_BUFFER, buffer);
+				alSourcei(source, AL_LOOPING, loop);
+				alSourcePlay(source);
+				return source;
+			}
+			
+			ALuint playSound(int sourceToUse, int loop, ALuint buffer){
+						switch(sourceToUse)
 				{
 					case 0:
 						alSourceStop(musicSource); // Stop the music that's currently playing.
@@ -183,8 +163,7 @@ namespace fr::audio
 
 			}
 
-			ALuint loadSound(const char path[])
-			{
+			ALuint loadSound(const char path[]){
 				ALenum format;
 				SNDFILE *sndFile;
 				SF_INFO sfInfo;
@@ -231,6 +210,14 @@ namespace fr::audio
 				sf_close(sndFile);
 
 				return buffer;
+			}
+
+			void checkForErrors(){
+				ALCenum error = alGetError();
+				if (error != AL_NO_ERROR)
+					voxelauxLogToFile("OpenAL Error; alGetError() returned false!", 2);
+				else
+					voxelauxLogToFile("All good.", 0);
 			}
 	}
 }
