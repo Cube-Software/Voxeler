@@ -10,7 +10,8 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#pragma once
+#ifndef FR_RENDERER_SHADER_HPP
+#define FR_RENDERER_SHADER_HPP
 
 #include "../fr.hpp"
 #include "../math/vectors.hpp"
@@ -27,10 +28,13 @@ namespace fr::renderer {
         void setuniform(const GLchar* uName, GLint value);
         void setuniform(const GLchar* uName, GLfloat value);
         void setuniform(const GLchar* uName, GLfloat x, GLfloat y);
+        void setuniform(const GLchar* uName, math::Vector2 vector);
         void setuniform(const GLchar* uName, GLfloat x, GLfloat y, GLfloat z);
         void setuniform(const GLchar* uName, math::Vector3 vector);
         void setuniform(const GLchar* uName, GLfloat x, GLfloat y, GLfloat z, GLfloat w);
+        void setuniform(const GLchar* uName, math::Vector4 vector);
         void setuniform(const GLchar* uName, const GLfloat* mtx);
+        void setuniform(const GLchar* uName, const math::Matrix4& mtx);
         void setsample2d(const GLchar* uName, GLuint tex2d, GLint unit = 0);
 
         GLuint getuniform(const char* name);
@@ -43,3 +47,5 @@ namespace fr::renderer {
         GLuint program;
     };
 }
+
+#endif

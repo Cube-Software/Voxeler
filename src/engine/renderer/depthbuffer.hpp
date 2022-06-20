@@ -10,34 +10,33 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef FR_RENDERER_COLORBUFFER_HPP
-#define FR_RENDERER_COLORBUFFER_HPP
+#ifndef FR_RENDERER_DEPTHBUFFER_HPP
+#define FR_RENDERER_DEPTHBUFFER_HPP
 
 #include "../fr.hpp"
 
 namespace fr::renderer{
-    class colorbuffer {
+    class depthbuffer {
     public:
-        colorbuffer() : bufferID(0), textureID(0) {}
-        colorbuffer(GLsizei width, GLsizei height);
-        ~colorbuffer();
+        depthbuffer() : bufferID(0), depthMapID(0) { }
+        depthbuffer(GLsizei width, GLsizei height);
+        ~depthbuffer();
 
         void setsize(GLsizei width, GLsizei height);
         void bind();
         void unbind();
         void clear();
 
-        const GLuint TexID() const {
-            return textureID;
+        const GLuint GetMapID() const {
+            return depthMapID;
         }
 
-        const GLuint GetID() const {
-            return textureID;
+        const GLuint GetBufferID() const {
+            return depthMapID;
         }
-
     private:
         GLuint bufferID;
-        GLuint textureID;
+        GLuint depthMapID;
     };
 }
 

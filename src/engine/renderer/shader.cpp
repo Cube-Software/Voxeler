@@ -48,4 +48,17 @@ namespace fr::renderer {
     void Shader::setuniform(const GLchar* uName, const GLfloat* mtx){
         GLCALL(glUniformMatrix4fv(glGetUniformLocation(program, uName), 1, GL_FALSE, mtx));
     }	
+    
+    void Shader::setuniform(const GLchar* uName, const math::Matrix4& mtx){
+        GLCALL(glUniformMatrix4fv(glGetUniformLocation(program, uName), 1, GL_FALSE, mtx.elements));
+    }
+
+    void Shader::setuniform(const GLchar* uName, math::Vector2 vector){
+        GLCALL(glUniform2f(glGetUniformLocation(program, uName), vector.x, vector.y));
+    }
+
+    void Shader::setuniform(const GLchar* uName, math::Vector4 vector){
+        GLCALL(glUniform4f(glGetUniformLocation(program, uName), vector.x, vector.y, vector.z, vector.w));
+    }
+
 }

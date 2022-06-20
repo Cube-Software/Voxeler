@@ -88,6 +88,20 @@
         "xloctime": "cpp",
         "xmemory": "cpp",
         "xstddef": "cpp",
-        "xtr1common": "cpp"
+        "xtr1common": "cpp",
+        "csetjmp": "cpp",
+        "cwctype": "cpp",
+        "any": "cpp",
+        "strstream": "cpp",
+        "*.tcc": "cpp",
+        "cfenv": "cpp",
+        "cuchar": "cpp",
+        "memory_resource": "cpp",
+        "string_view": "cpp",
+        "scoped_allocator": "cpp",
+        "typeindex": "cpp",
+        "valarray": "cpp",
+        "variant": "cpp",
+        "*.ipp": "cpp"
     }
 }
