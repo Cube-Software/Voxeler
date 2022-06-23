@@ -50,7 +50,7 @@ namespace fr::renderer {
     }	
     
     void Shader::setuniform(const GLchar* uName, const math::Matrix4& mtx){
-        GLCALL(glUniformMatrix4fv(glGetUniformLocation(program, uName), 1, GL_FALSE, mtx.elements));
+        GLCALL(glUniformMatrix4fv(glGetUniformLocation(program, uName), 1, GL_FALSE, mtx.ToPointer()));
     }
 
     void Shader::setuniform(const GLchar* uName, math::Vector2 vector){

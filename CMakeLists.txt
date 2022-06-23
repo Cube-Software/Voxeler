@@ -5,13 +5,14 @@ set(CXX_STANDARD 17)
 
 if(WIN32)
 add_subdirectory(3rdparty/glfw)
-add_subdirectory(3rdparty/glad)
 add_subdirectory(3rdparty/assimp)
 add_subdirectory(3rdparty/tinyxml2)
 add_subdirectory(3rdparty/openal-soft)
 add_subdirectory(3rdparty/libsndfile)
 add_subdirectory(3rdparty/sol2)
 endif(WIN32) 
+
+add_subdirectory(3rdparty/glad)
 
 include_directories(3rdparty/sol2/include)
 include_directories(3rdparty/glfw/include)

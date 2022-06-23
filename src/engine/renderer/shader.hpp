@@ -15,6 +15,7 @@
 
 #include "../fr.hpp"
 #include "../math/vectors.hpp"
+#include "../math/matrix4.hpp"
 
 namespace fr::renderer {
     class Shader {
