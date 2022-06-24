@@ -1,5 +1,3 @@
-#include <iostream>
+#include "engine/fr.hpp"
 
-int main() {
-	std::cout << "cool";
-}
+int main() { }

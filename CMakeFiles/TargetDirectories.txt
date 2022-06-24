@@ -1,0 +1,3 @@
+/home/kacperks/Pulpit/Projects/Voxeler/CMakeFiles/rebuild_cache.dir
+/home/kacperks/Pulpit/Projects/Voxeler/CMakeFiles/edit_cache.dir
+/home/kacperks/Pulpit/Projects/Voxeler/CMakeFiles/Voxeler.dir

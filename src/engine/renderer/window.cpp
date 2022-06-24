@@ -21,7 +21,9 @@ namespace fr::renderer {
         glfwMakeContextCurrent(window);
         if (!window) glfwTerminate();
         
-        assert(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress));
+        GLenum err = glewInit();
+		if (GLEW_OK != err) { fprintf(stderr, "Error: %s\n", glewGetErrorString(err)); }
+
         glViewport(0, 0, size.x, size.y);
         while (glfwWindowShouldClose(window) == 0) {
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

@@ -35,8 +35,8 @@
 #include <filesystem>
 #include <unordered_map>
 
-/* glad */
-#include <glad/glad.h>
+/* glew */
+#include <GL/glew.h>
 /* glfw */
 #include <GLFW/glfw3.h>
 /* openal-soft */

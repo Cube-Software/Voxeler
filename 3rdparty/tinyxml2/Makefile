@@ -101,7 +101,7 @@ install/local/fast: preinstall/fast
 
 # Special rule for the target list_install_components
 list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\" \"assimp-bin\" \"assimp-dev\" \"libassimp5.0.1-dev\" \"tinyxml2_development\""
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"tinyxml2_development\""
 .PHONY : list_install_components
 
 # Special rule for the target list_install_components
@@ -119,17 +119,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target package_source
-package_source:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool for source..."
-	cd /home/kacperks/Pulpit/Projects/Voxeler && /usr/bin/cpack --config ./CPackSourceConfig.cmake /home/kacperks/Pulpit/Projects/Voxeler/CPackSourceConfig.cmake
-.PHONY : package_source
-
-# Special rule for the target package_source
-package_source/fast: package_source
-
-.PHONY : package_source/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -153,17 +142,6 @@ install/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
-
-# Special rule for the target package
-package: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Run CPack packaging tool..."
-	cd /home/kacperks/Pulpit/Projects/Voxeler && /usr/bin/cpack --config ./CPackConfig.cmake
-.PHONY : package
-
-# Special rule for the target package
-package/fast: package
-
-.PHONY : package/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -194,7 +172,6 @@ preinstall/fast:
 
 # clear depends
 depend:
-	cd /home/kacperks/Pulpit/Projects/Voxeler && $(CMAKE_COMMAND) -P /home/kacperks/Pulpit/Projects/Voxeler/CMakeFiles/VerifyGlobs.cmake
 	cd /home/kacperks/Pulpit/Projects/Voxeler && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
@@ -713,8 +690,6 @@ help:
 	@echo "... install/local"
 	@echo "... install/strip"
 	@echo "... list_install_components"
-	@echo "... package"
-	@echo "... package_source"
 	@echo "... rebuild_cache"
 	@echo "... Continuous"
 	@echo "... ContinuousBuild"
@@ -763,7 +738,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/kacperks/Pulpit/Projects/Voxeler && $(CMAKE_COMMAND) -P /home/kacperks/Pulpit/Projects/Voxeler/CMakeFiles/VerifyGlobs.cmake
 	cd /home/kacperks/Pulpit/Projects/Voxeler && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 
