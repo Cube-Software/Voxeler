@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
+Copyright (c) 2006-2022, assimp team
 
 All rights reserved.
 
@@ -52,9 +52,10 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <assimp/scene.h>
 #include <assimp/Importer.hpp>
 
-#include <fstream>
+
 #include <iomanip>
 #include <memory>
+#include <sstream>
 
 static const aiImporterDesc desc = { "MMD Importer",
     "",
@@ -89,14 +90,9 @@ MMDImporter::~MMDImporter() {
 // ------------------------------------------------------------------------------------------------
 //  Returns true, if file is an pmx file.
 bool MMDImporter::CanRead(const std::string &pFile, IOSystem *pIOHandler,
-        bool checkSig) const {
-    if (!checkSig) {
-        return SimpleExtensionCheck(pFile, "pmx");
-    } else {
-        // Check file Header
-        static const char *pTokens[] = { "PMX " };
-        return BaseImporter::SearchFileHeaderForToken(pIOHandler, pFile, pTokens, 1);
-    }
+        bool /*checkSig*/) const {
+    static const char *tokens[] = { "PMX " };
+    return SearchFileHeaderForToken(pIOHandler, pFile, tokens, AI_COUNT_OF(tokens));
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -107,26 +103,32 @@ const aiImporterDesc *MMDImporter::GetInfo() const {
 // ------------------------------------------------------------------------------------------------
 //  MMD import implementation
 void MMDImporter::InternReadFile(const std::string &file, aiScene *pScene,
-        IOSystem * /*pIOHandler*/) {
-    // Read file by istream
-    std::filebuf fb;
-    if (!fb.open(file, std::ios::in | std::ios::binary)) {
+        IOSystem* pIOHandler) {
+
+    auto streamCloser = [&](IOStream *pStream) {
+        pIOHandler->Close(pStream);
+    };
+
+    static const std::string mode = "rb";
+    const std::unique_ptr<IOStream, decltype(streamCloser)> fileStream(pIOHandler->Open(file, mode), streamCloser);
+
+    if (fileStream == nullptr) {
         throw DeadlyImportError("Failed to open file ", file, ".");
     }
 
-    std::istream fileStream(&fb);
-
-    // Get the file-size and validate it, throwing an exception when fails
-    fileStream.seekg(0, fileStream.end);
-    size_t fileSize = static_cast<size_t>(fileStream.tellg());
-    fileStream.seekg(0, fileStream.beg);
-
-    if (fileSize < sizeof(pmx::PmxModel)) {
+    const size_t fileSize = fileStream->FileSize();
+    if (fileSize < sizeof(pmx::PmxModel))
+    {
         throw DeadlyImportError(file, " is too small.");
     }
 
+    std::vector<char> contents(fileStream->FileSize());
+    fileStream->Read(contents.data(), 1, contents.size());
+
+    std::istringstream iss(std::string(contents.begin(), contents.end()));
+
     pmx::PmxModel model;
-    model.Read(&fileStream);
+    model.Read(&iss);
 
     CreateDataFromImport(&model, pScene);
 }

@@ -47,6 +47,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <assimp/types.h>
 #include <map>
 #include <vector>
+#include "Common/Maybe.h"
 
 namespace Assimp {
 namespace ObjFile {
@@ -60,7 +61,7 @@ struct Material;
 //! \brief  Data structure for a simple obj-face, describes discredit,l.ation and materials
 // ------------------------------------------------------------------------------------------------
 struct Face {
-    typedef std::vector<unsigned int> IndexArray;
+    using IndexArray = std::vector<unsigned int>;
 
     //! Primitive type
     aiPrimitiveType m_PrimitiveType;
@@ -122,7 +123,6 @@ struct Object {
 struct Material {
     //! Name of material description
     aiString MaterialName;
-
     //! Texture names
     aiString texture;
     aiString textureSpecular;
@@ -134,6 +134,10 @@ struct Material {
     aiString textureSpecularity;
     aiString textureOpacity;
     aiString textureDisp;
+    aiString textureRoughness;
+    aiString textureMetallic;
+    aiString textureSheen;
+    aiString textureRMA;
 
     enum TextureType {
         TextureDiffuseType = 0,
@@ -152,6 +156,10 @@ struct Material {
         TextureSpecularityType,
         TextureOpacityType,
         TextureDispType,
+        TextureRoughnessType,
+        TextureMetallicType,
+        TextureSheenType,
+        TextureRMAType,
         TextureTypeCount
     };
     bool clamp[TextureTypeCount];
@@ -175,6 +183,22 @@ struct Material {
     //! Transparency color
     aiColor3D transparent;
 
+    //! PBR Roughness
+    Maybe<ai_real> roughness;
+    //! PBR Metallic
+    Maybe<ai_real> metallic;
+    //! PBR Metallic
+    Maybe<aiColor3D> sheen;
+    //! PBR Clearcoat Thickness
+    Maybe<ai_real> clearcoat_thickness;
+    //! PBR Clearcoat Rougness
+    Maybe<ai_real> clearcoat_roughness;
+    //! PBR Anisotropy
+    ai_real anisotropy;
+
+    //! bump map multipler (normal map scalar)(-bm)
+    ai_real bump_multiplier;
+
     //! Constructor
     Material() :
             diffuse(ai_real(0.6), ai_real(0.6), ai_real(0.6)),
@@ -182,7 +206,14 @@ struct Material {
             shineness(ai_real(0.0)),
             illumination_model(1),
             ior(ai_real(1.0)),
-            transparent(ai_real(1.0), ai_real(1.0), ai_real(1.0)) {
+            transparent(ai_real(1.0), ai_real(1.0), ai_real(1.0)),
+            roughness(),
+            metallic(),
+            sheen(),
+            clearcoat_thickness(),
+            clearcoat_roughness(),
+            anisotropy(ai_real(0.0)),
+            bump_multiplier(ai_real(1.0)) {
         std::fill_n(clamp, static_cast<unsigned int>(TextureTypeCount), false);
     }
 
@@ -234,12 +265,12 @@ struct Mesh {
 
 // ------------------------------------------------------------------------------------------------
 //! \struct Model
-//! \brief  Data structure to store all obj-specific model datas
+//! \brief  Data structure to store all obj-specific model data
 // ------------------------------------------------------------------------------------------------
 struct Model {
-    typedef std::map<std::string, std::vector<unsigned int> *> GroupMap;
-    typedef std::map<std::string, std::vector<unsigned int> *>::iterator GroupMapIt;
-    typedef std::map<std::string, std::vector<unsigned int> *>::const_iterator ConstGroupMapIt;
+    using GroupMap = std::map<std::string, std::vector<unsigned int> *>;
+    using GroupMapIt = std::map<std::string, std::vector<unsigned int> *>::iterator;
+    using ConstGroupMapIt = std::map<std::string, std::vector<unsigned int> *>::const_iterator;
 
     //! Model name
     std::string m_ModelName;
@@ -278,12 +309,12 @@ struct Model {
 
     //! \brief  The default class constructor
     Model() :
-            m_ModelName(""),
+            m_ModelName(),
             m_pCurrent(nullptr),
             m_pCurrentMaterial(nullptr),
             m_pDefaultMaterial(nullptr),
             m_pGroupFaceIDs(nullptr),
-            m_strActiveGroup(""),
+            m_strActiveGroup(),
             m_TextureCoordDim(0),
             m_pCurrentMesh(nullptr) {
         // empty
@@ -291,27 +322,17 @@ struct Model {
 
     //! \brief  The class destructor
     ~Model() {
-        // Clear all stored object instances
-        for (std::vector<Object *>::iterator it = m_Objects.begin();
-                it != m_Objects.end(); ++it) {
-            delete *it;
+        for (auto & it : m_Objects) {
+            delete it;
         }
-        m_Objects.clear();
-
-        // Clear all stored mesh instances
-        for (std::vector<Mesh *>::iterator it = m_Meshes.begin();
-                it != m_Meshes.end(); ++it) {
-            delete *it;
+        for (auto & Meshe : m_Meshes) {
+            delete Meshe;
         }
-        m_Meshes.clear();
-
-        for (GroupMapIt it = m_Groups.begin(); it != m_Groups.end(); ++it) {
-            delete it->second;
+        for (auto & Group : m_Groups) {
+            delete Group.second;
         }
-        m_Groups.clear();
-
-        for (std::map<std::string, Material *>::iterator it = m_MaterialMap.begin(); it != m_MaterialMap.end(); ++it) {
-            delete it->second;
+        for (auto & it : m_MaterialMap) {
+            delete it.second;
         }
     }
 };

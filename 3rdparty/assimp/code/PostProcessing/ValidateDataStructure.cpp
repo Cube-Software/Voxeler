@@ -3,7 +3,7 @@
 Open Asset Import Library (assimp)
 ---------------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
+Copyright (c) 2006-2022, assimp team
 
 
 
@@ -521,7 +521,7 @@ void ValidateDSProcess::Validate(const aiAnimation *pAnimation) {
 // ------------------------------------------------------------------------------------------------
 void ValidateDSProcess::SearchForInvalidTextures(const aiMaterial *pMaterial,
         aiTextureType type) {
-    const char *szType = TextureTypeToString(type);
+    const char *szType = aiTextureTypeToString(type);
 
     // ****************************************************************************
     // Search all keys of the material ...

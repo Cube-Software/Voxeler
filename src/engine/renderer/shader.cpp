@@ -60,5 +60,4 @@ namespace fr::renderer {
     void Shader::setuniform(const GLchar* uName, math::Vector4 vector){
         GLCALL(glUniform4f(glGetUniformLocation(program, uName), vector.x, vector.y, vector.z, vector.w));
     }
-
 }

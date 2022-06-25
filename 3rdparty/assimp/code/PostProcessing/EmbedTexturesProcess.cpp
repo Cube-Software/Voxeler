@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
+Copyright (c) 2006-2022, assimp team
 
 All rights reserved.
 
@@ -89,7 +89,7 @@ void EmbedTexturesProcess::Execute(aiScene* pScene) {
                 // Indeed embed
                 if (addTexture(pScene, path.data)) {
                     auto embeddedTextureId = pScene->mNumTextures - 1u;
-                    ::ai_snprintf(path.data, 1024, "*%u", embeddedTextureId);
+                    path.length = ::ai_snprintf(path.data, 1024, "*%u", embeddedTextureId);
                     material->AddProperty(&path, AI_MATKEY_TEXTURE(tt, texId));
                     embeddedTexturesCount++;
                 }
@@ -100,7 +100,7 @@ void EmbedTexturesProcess::Execute(aiScene* pScene) {
     ASSIMP_LOG_INFO("EmbedTexturesProcess finished. Embedded ", embeddedTexturesCount, " textures." );
 }
 
-bool EmbedTexturesProcess::addTexture(aiScene* pScene, std::string path) const {
+bool EmbedTexturesProcess::addTexture(aiScene *pScene, const std::string &path) const {
     std::streampos imageSize = 0;
     std::string    imagePath = path;
 
@@ -128,7 +128,7 @@ bool EmbedTexturesProcess::addTexture(aiScene* pScene, std::string path) const {
 
     aiTexel* imageContent = new aiTexel[ 1ul + static_cast<unsigned long>( imageSize ) / sizeof(aiTexel)];
     pFile->Seek(0, aiOrigin_SET);
-    pFile->Read(reinterpret_cast<char*>(imageContent), imageSize, 1);
+    pFile->Read(reinterpret_cast<char*>(imageContent), static_cast<size_t>(imageSize), 1);
     mIOHandler->Close(pFile);
 
     // Enlarging the textures table
@@ -137,7 +137,7 @@ bool EmbedTexturesProcess::addTexture(aiScene* pScene, std::string path) const {
     pScene->mTextures = new aiTexture*[pScene->mNumTextures];
     ::memmove(pScene->mTextures, oldTextures, sizeof(aiTexture*) * (pScene->mNumTextures - 1u));
     delete [] oldTextures;
-    
+
     // Add the new texture
     auto pTexture = new aiTexture;
     pTexture->mHeight = 0; // Means that this is still compressed

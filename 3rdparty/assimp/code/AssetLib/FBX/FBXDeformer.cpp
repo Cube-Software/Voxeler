@@ -2,8 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
-
+Copyright (c) 2006-2022, assimp team
 
 All rights reserved.
 
@@ -58,15 +57,13 @@ namespace FBX {
 using namespace Util;
 
 // ------------------------------------------------------------------------------------------------
-Deformer::Deformer(uint64_t id, const Element& element, const Document& doc, const std::string& name)
-    : Object(id,element,name)
-{
+Deformer::Deformer(uint64_t id, const Element& element, const Document& doc, const std::string& name) :
+        Object(id,element,name) {
     const Scope& sc = GetRequiredScope(element);
 
     const std::string& classname = ParseTokenAsString(GetRequiredToken(element,2));
     props = GetPropertyTable(doc,"Deformer.Fbx" + classname,element,sc,true);
 }
-
 
 // ------------------------------------------------------------------------------------------------
 Deformer::~Deformer()

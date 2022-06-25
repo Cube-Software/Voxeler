@@ -2,8 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
-
+Copyright (c) 2006-2022, assimp team
 
 All rights reserved.
 
@@ -54,18 +53,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FBXImportSettings.h"
 #include "FBXDocumentUtil.h"
 
-
 namespace Assimp {
 namespace FBX {
 
 using namespace Util;
 
 // ------------------------------------------------------------------------------------------------
-Geometry::Geometry(uint64_t id, const Element& element, const std::string& name, const Document& doc)
-    : Object(id, element, name)
-    , skin()
-{
-    const std::vector<const Connection*>& conns = doc.GetConnectionsByDestinationSequenced(ID(),"Deformer");
+Geometry::Geometry(uint64_t id, const Element& element, const std::string& name, const Document& doc) :
+        Object(id, element, name), skin() {
+    const std::vector<const Connection*> &conns = doc.GetConnectionsByDestinationSequenced(ID(),"Deformer");
     for(const Connection* con : conns) {
         const Skin* const sk = ProcessSimpleConnection<Skin>(*con, false, "Skin -> Geometry", element);
         if(sk) {
@@ -76,12 +72,6 @@ Geometry::Geometry(uint64_t id, const Element& element, const std::string& name,
             blendShapes.push_back(bsp);
         }
     }
-}
-
-// ------------------------------------------------------------------------------------------------
-Geometry::~Geometry()
-{
-    // empty
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -183,16 +173,10 @@ MeshGeometry::MeshGeometry(uint64_t id, const Element& element, const std::strin
         if(doc.Settings().readAllLayers || index == 0) {
             const Scope& layer = GetRequiredScope(*(*it).second);
             ReadLayer(layer);
-        }
-        else {
+        } else {
             FBXImporter::LogWarn("ignoring additional geometry layers");
         }
     }
-}
-
-// ------------------------------------------------------------------------------------------------
-MeshGeometry::~MeshGeometry() {
-    // empty
 }
 
 // ------------------------------------------------------------------------------------------------
@@ -633,7 +617,7 @@ void MeshGeometry::ReadVertexDataMaterials(std::vector<int>& materials_out, cons
     {
         return;
     }
-    
+
     // materials are handled separately. First of all, they are assigned per-face
     // and not per polyvert. Secondly, ReferenceInformationType=IndexToDirect
     // has a slightly different meaning for materials.

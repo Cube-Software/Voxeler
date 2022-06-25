@@ -2,7 +2,7 @@
 Open Asset Import Library (assimp)
 ----------------------------------------------------------------------
 
-Copyright (c) 2006-2021, assimp team
+Copyright (c) 2006-2022, assimp team
 
 
 All rights reserved.
@@ -415,7 +415,7 @@ void ComputeUVMappingProcess::Execute( aiScene* pScene)
                     if (!DefaultLogger::isNullLogger())
                     {
                         ai_snprintf(buffer, 1024, "Found non-UV mapped texture (%s,%u). Mapping type: %s",
-                            TextureTypeToString((aiTextureType)prop->mSemantic),prop->mIndex,
+                            aiTextureTypeToString((aiTextureType)prop->mSemantic),prop->mIndex,
                             MappingTypeToString(mapping));
 
                         ASSIMP_LOG_INFO(buffer);
