@@ -2,8 +2,6 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 project(Voxeler)
 
-find_package(OpenGL REQUIRED)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
@@ -38,7 +36,7 @@ endif()
 if (WIN32) # windows
 target_link_libraries(${PROJECT_NAME} opengl32)
 target_link_libraries(${PROJECT_NAME} glfw)
-target_link_libraries(${PROJECT_NAME} glad)
+target_link_libraries(${PROJECT_NAME} glew32s)
 target_link_libraries(${PROJECT_NAME} tinyxml2)
 target_link_libraries(${PROJECT_NAME} assimp)
 endif(WIN32)
