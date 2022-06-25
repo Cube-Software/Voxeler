@@ -9,39 +9,37 @@
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#pragma once
+#ifndef FR_WINEVENTS
+#define FR_WINEVENTS
 
-#include "AppEvents.h"
-#include "KeyEvents.h"
-#include "MouseEvents.h"
-#include "WindowEvents.h"
-#include "Dispatcher.h"
+#include "event.hpp"
 
-class EventSystem {
-public:
-    EventSystem& operator=(const EventSystem&) = delete;
-    EventSystem(const EventSystem&) = delete;
-    ~EventSystem() = default;
+namespace fr::events{
+    // key events
+    struct WindowEvent : public Event {
+        WindowEvent() = default;
+        virtual ~WindowEvent() = default;
+        inline const EventID GetID() const { return EventTypeID<WindowEvent>(); }
+    };
 
-    static EventSystem& Ref() {
-        static EventSystem ref;
-        return ref;
-    }
+    // key pressed event
+    struct WindowCloseEvent : public Event {
+        WindowCloseEvent() = default;
+        ~WindowCloseEvent() = default;
+        inline const EventID GetID() const { return EventTypeID<WindowCloseEvent>(); }
+    };
 
-    inline void Poll() { glfwPollEvents(); }
+    // key realesed event
+    struct WindowResizedEvent : public Event {
+        ~WindowResizedEvent() = default;
+        WindowResizedEvent(double w, double h): width(w), height(h) { }
+        inline const EventID GetID() const { return EventTypeID<WindowResizedEvent>(); }
 
-    inline KeyBoard& KeyboardRef() { return keys; }
-    inline MouseData& MouseRef() { return mouse; }
+        inline const double Width() const { return width; }
+        inline const double Height() const { return height; }
 
-    inline const bool IsKeyPressed(KeyCode key) const { return keys.test(key); }
-    inline const bool IsMouseDown(MouseButton button) const { return mouse.buttons.test(button); }
-
-private:
-    EventSystem() = default;
-
-private:
-    KeyBoard keys;  
-    MouseData mouse;
-};
-
-static EventSystem& Events = EventSystem::Ref();
+    protected:
+        double width, height;
+    };
+}
+#endif

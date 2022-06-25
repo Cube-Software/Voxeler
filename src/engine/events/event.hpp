@@ -9,46 +9,37 @@
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#pragma once
 
-#include "Event.h"
+#ifndef FR_EVENT_HPP
+#define FR_EVENT_HPP
 
+#include "../fr.hpp"
 
-class EventDispatcher {
-    using EventCallback = std::function<void(const Event&)>;
+namespace fr::events{
+    class Event;
+    using EventID = size_t;
 
-public:    
-    EventDispatcher& operator=(const EventDispatcher&) = delete;
-    EventDispatcher(const EventDispatcher&) = delete;
-    ~EventDispatcher() = default;
-
-    static EventDispatcher& Ref() {
-        static EventDispatcher ref;
-        return ref;
+    inline EventID CreateEventID() {
+        static EventID typeID = 0u;
+        return typeID++;
     }
 
     template<typename T>
-    void AddListener(EventCallback&& callback) {
-        callbacks[EventTypeID<T>()].push_back(callback);
+    inline EventID EventTypeID() {
+        static_assert((std::is_base_of<Event, T>::value && !std::is_same<Event, T>::value), "Invalid template type");
+        static const EventID typeID = CreateEventID();
+        return typeID;
     }
 
-    template<typename T>
-    const T& Cast(const Event& e) {
-        return static_cast<const T&>(e);
-    }
+    struct EventData {
 
-    template<typename T>
-    void Post(const T& e) const {  
-        const EventID eventID = EventTypeID<T>();
-        if (callbacks.find(eventID) == callbacks.end()) { return; }
-        for (auto&& callback : callbacks.at(eventID)) { callback(e); }
-    }
+    };
 
-private:
-    EventDispatcher() = default;
+    struct Event {
+        Event() = default;
+        virtual ~Event() = default;
+        virtual const EventID GetID() const = 0;
+    };
+}
 
-private:
-    std::map<EventID, std::vector<EventCallback>> callbacks;
-};
-
-static EventDispatcher& Dispatcher = EventDispatcher::Ref();
+#endif

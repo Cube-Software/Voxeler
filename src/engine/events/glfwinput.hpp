@@ -9,30 +9,18 @@
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#pragma once
+#ifndef FR_EVENTS_GLFWINP
+#define FR_EVENTS_GLFWINP
 
-#include "Event.h"
+#include "../fr.hpp"
 
-using KeyCode = int;
-using KeyBoard = std::bitset<1024>;
+namespace fr::glfwinput {
+	void WindowCloseCallback(GLFWwindow* window);
+	void WindowResizedCallback(GLFWwindow* window, int width, int height);
+	void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
+	void MouseButtonCallback(GLFWwindow* window, int button, int action, int mod);
+	void MouseMotionCallback(GLFWwindow* window, double x, double y);
+	void MouseScrollCallback(GLFWwindow* window, double x, double y);
+}
 
-// key events
-struct KeyEvent : public Event {
-    KeyEvent() = default;
-    virtual ~KeyEvent() = default;
-    inline const EventID GetID() const { return EventTypeID<KeyEvent>(); }
-};
-
-// key pressed event
-struct KeyPressedEvent : public KeyEvent {
-    KeyPressedEvent() = default;
-    ~KeyPressedEvent() = default;
-    inline const EventID GetID() const { return EventTypeID<KeyPressedEvent>(); }
-};
-
-// key realesed event
-struct KeyReleasedEvent : public KeyEvent {
-    KeyReleasedEvent() = default;
-    ~KeyReleasedEvent() = default;
-    inline const EventID GetID() const { return EventTypeID<KeyReleasedEvent>(); }
-};
+#endif

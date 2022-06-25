@@ -9,16 +9,26 @@
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#pragma once
 
-#include "Event.h"
+#ifndef FR_RENDERER_SAMPLERBUFFER_HPP
+#define FR_RENDERER_SAMPLERBUFFER_HPP
 
-struct AddEntityEvent : public Event {
-    AddEntityEvent() = default;
-    ~AddEntityEvent() = default;
-    AddEntityEvent(std::string name) : _Name(name) { }
-    std::string GetName() const { return _Name; }
+#include "../fr.hpp"
 
-private:
-    std::string _Name;
-};
+namespace fr::renderer{
+    class samplerbuffer{
+        private:
+        GLsizei width, height;
+        GLuint bufferID, renderID, textureID;
+        public:
+        samplerbuffer();
+        samplerbuffer(GLsizei w, GLsizei h);
+        ~samplerbuffer();
+
+        void bind();
+        void unbind();
+        void clear();
+        
+        void blit_to(GLuint targetbuffID);
+    }
+}

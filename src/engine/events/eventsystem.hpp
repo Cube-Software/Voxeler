@@ -10,33 +10,33 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#pragma once
+#ifndef FR_EVENTS_SYSTEM
+#define FR_EVENTS_SYSTEM
 
-#include "Event.h"
+#include "appevents.hpp"
+#include "keyevents.hpp"
+#include "mouseevents.hpp"
+#include "windowevents.hpp"
+#include "dispatcher.hpp"
 
-// key events
-struct WindowEvent : public Event {
-    WindowEvent() = default;
-    virtual ~WindowEvent() = default;
-    inline const EventID GetID() const { return EventTypeID<WindowEvent>(); }
-};
+namespace fr::events{
+    class EventSystem {
+    public:
+        EventSystem() = default;
+        ~EventSystem() = default;
 
-// key pressed event
-struct WindowCloseEvent : public Event {
-    WindowCloseEvent() = default;
-    ~WindowCloseEvent() = default;
-    inline const EventID GetID() const { return EventTypeID<WindowCloseEvent>(); }
-};
+        inline void Poll() { glfwPollEvents(); }
 
-// key realesed event
-struct WindowResizedEvent : public Event {
-    ~WindowResizedEvent() = default;
-    WindowResizedEvent(double w, double h): width(w), height(h) { }
-    inline const EventID GetID() const { return EventTypeID<WindowResizedEvent>(); }
+        inline KeyBoard& KeyboardRef() { return keys; }
+        inline MouseData& MouseRef() { return mouse; }
 
-    inline const double Width() const { return width; }
-    inline const double Height() const { return height; }
+        inline const bool IsKeyPressed(KeyCode key) const { return keys.test(key); }
+        inline const bool IsMouseDown(MouseButton button) const { return mouse.buttons.test(button); }
 
-protected:
-    double width, height;
-};
+    private:
+        KeyBoard keys;  
+        MouseData mouse;
+    };
+}
+
+#endif

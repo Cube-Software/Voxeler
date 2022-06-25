@@ -12,11 +12,10 @@
 #pragma once
 
 #include "../fr.hpp"
-#include "GLFWImp.h"
-#include "EventSystem.h"
+#include "glfwinput.hpp"
+#include "eventsystem.hpp"
 
-namespace GlfwImpl {
-
+namespace fr::glfwinput {
 	static MouseData& mouse = Events.MouseRef();
 	static KeyBoard& keys = Events.KeyboardRef();
 

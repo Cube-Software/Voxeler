@@ -9,13 +9,31 @@
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#pragma once
 
-namespace GlfwImpl {
-	void WindowCloseCallback(GLFWwindow* window);
-	void WindowResizedCallback(GLFWwindow* window, int width, int height);
-	void KeyboardCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
-	void MouseButtonCallback(GLFWwindow* window, int button, int action, int mod);
-	void MouseMotionCallback(GLFWwindow* window, double x, double y);
-	void MouseScrollCallback(GLFWwindow* window, double x, double y);
+#ifndef FR_APPEVENTS
+#define FR_APPEVENTS
+
+#include "event.hpp"
+
+namespace fr::events{
+    // key event
+    struct UiEvent : public Event {
+        UiEvent() = default;
+        virtual ~UiEvent() = default;
+        inline const EventID GetID() const { return EventTypeID<UiEvent>(); }
+    };
+
+    struct ViewportResizedEvent : public Event {
+        ~ViewportResizedEvent() = default;
+        ViewportResizedEvent(double w, double h) : width(w), height(h) { }
+        inline const EventID GetID() const { return EventTypeID<ViewportResizedEvent>(); }
+
+        inline const double Width() const { return width; }
+        inline const double Height() const { return height; }
+
+    protected:
+        double width, height;
+    };
 }
+
+#endif
