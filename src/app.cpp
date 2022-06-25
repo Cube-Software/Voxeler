@@ -1,3 +1,5 @@
 #include "engine/fr.hpp"
 
-int main() { }
+using namespace fr;
+
+int main(int argc, char** argv) {}
