@@ -32,3 +32,5 @@ namespace fr::renderer{
         void blit_to(GLuint targetbuffID);
     }
 }
+
+#endif

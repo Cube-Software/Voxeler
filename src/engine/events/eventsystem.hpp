@@ -25,6 +25,11 @@ namespace fr::events{
         EventSystem() = default;
         ~EventSystem() = default;
 
+        static EventSystem& Ref() {
+            static EventSystem ref;
+            return ref;
+        }
+        
         inline void Poll() { glfwPollEvents(); }
 
         inline KeyBoard& KeyboardRef() { return keys; }

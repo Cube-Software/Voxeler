@@ -32,6 +32,7 @@
 #include <functional>
 #include <filesystem>
 #include <unordered_map>
+#include <stdlib.h>
 
 #if defined(_WIN32)
 #include <windows.h>
@@ -49,6 +50,7 @@
 /* glew */
 #include <GL/glew.h>
 #elif defined(FR_GLAD)
+/*glad */
 #include <glad/glad.h>
 #endif
 /* glfw */
@@ -56,14 +58,8 @@
 /* openal-soft */
 #include <AL/al.h>
 #include <AL/alc.h>
-
-#include <stdlib.h>
+/* libsndfile */
 #include <sndfile.h>
-/* assimp */
-#include <assimp/scene.h>
-#include <assimp/Importer.hpp>
-#include <assimp/pbrmaterial.h>
-#include <assimp/postprocess.h>
 /* tiny xml */
 #include <tinyxml2.h>
 

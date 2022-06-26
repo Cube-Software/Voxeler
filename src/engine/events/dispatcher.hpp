@@ -17,12 +17,15 @@
 
 namespace fr::events{
     class EventDispatcher {
-        using EventCallback = std::function<void(const Event&)>;
-
+    using EventCallback = std::function<void(const Event&)>;
     public:    
         EventDispatcher() = default;
-        ~EventDispatcher() = default;
+        ~EventDispatcher() = default;   
 
+        static EventDispatcher& Ref() {
+            static EventDispatcher ref;
+            return ref;
+        }
 
         template<typename T>
         void AddListener(EventCallback&& callback) {

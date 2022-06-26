@@ -54,28 +54,14 @@ namespace fr::renderer {
         void pushattribute(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLsizei offset) const;
         void pushattribute(GLuint index, GLint size, GLsizei stride, GLvoid* ptr) const;
 
-        void create(const std::vector<vertex>& vertices, const std::vector<unsigned int>& indices) const;
+        void create(const std::vector<vertex>& vertices, const std::vector<unsigned int>& indices);
         void destroy() const;
 
-        const GLuint GetVaoID() const {
-            return vaoID;
-        }
-        
-        const GLuint GetVboID() const {
-            return vboID;
-        }
-
-        const GLuint GetEboID() const {
-            return eboID;
-        }
-
-        const GLsizei GetVertexCount() const {
-            return vertexCount;
-        }
-
-        const GLsizei GetIndicesCount() const {
-            return indicesCount;
-        }
+        const GLuint GetVaoID() const { return vaoID; }
+        const GLuint GetVboID() const { return vboID; }
+        const GLuint GetEboID() const { return eboID; }
+        const GLsizei GetVertexCount() const { return vertexCount; }
+        const GLsizei GetIndicesCount() const { return indicesCount; }
 
     };
 }
