@@ -33,8 +33,24 @@
 #include <filesystem>
 #include <unordered_map>
 
+#if defined(_WIN32)
+#include <windows.h>
+#define DLLAPI __declspec(dllexport)
+#define FR_GLAD
+#elif defined(__linux__)
+#include <bits/stdc++.h>
+#define FR_GLEW
+#define DLLAPI
+#else
+#warning Not Supported Platform!
+#endif
+
+#if defined(FR_GLEW)
 /* glew */
 #include <GL/glew.h>
+#elif defined(FR_GLAD)
+#include <glad/glad.h>
+#endif
 /* glfw */
 #include <GLFW/glfw3.h>
 /* openal-soft */
@@ -50,16 +66,6 @@
 #include <assimp/postprocess.h>
 /* tiny xml */
 #include <tinyxml2.h>
-
-#if defined(_WIN32)
-#include <windows.h>
-#define DLLAPI __declspec(dllexport)
-#elif defined(__linux__)
-#include <bits/stdc++.h>
-#define DLLAPI
-#else
-#warning Not Supported Platform!
-#endif
 
 #ifdef _WIN32
 #define ASSERT(boolean) if (!(boolean)) __debugbreak();

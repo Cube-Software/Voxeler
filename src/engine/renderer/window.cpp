@@ -21,8 +21,12 @@ namespace fr::renderer {
         glfwMakeContextCurrent(window);
         if (!window) glfwTerminate();
         
+        #if defined(FR_GLEW)
         GLenum err = glewInit();
 		if (GLEW_OK != err) { fprintf(stderr, "Error: %s\n", glewGetErrorString(err)); }
+        #elif defined(FR_GLAD)
+        assert(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress));
+        #endif
 
         glViewport(0, 0, size.x, size.y);
         while (glfwWindowShouldClose(window) == 0) {
