@@ -14,15 +14,15 @@
 
 namespace fr::renderer {
     vertexarray::vertexarray() : vaoID(0), vboID(0), iboID(0) { }
-
+    
     vertexarray::vertexarray(const std::vector<vertex>& vertices, const std::vector<unsigned int>& indices) : vaoID(0), vboID(0), iboID(0) {
         create(vertices, indices);
     }
-
+    
     vertexarray::~vertexarray() {
         destroy();
     }
-
+    
     void vertexarray::vertexarray(vertex* vertices, GLsizei vSize, GLuint* indices=nullptr, GLsizei iSize=0) : indicesCount(iSize), vertexCount(vSize) {
             glGenVertexArrays(1, &vaoID);
             glGenBuffers(1, &vboID);
@@ -44,25 +44,25 @@ namespace fr::renderer {
             // Texcoords
             glEnableVertexAttribArray(2);
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)offsetof(vertex, TexCoords));
-
+    
             glBindVertexArray(0);
             numOfVertices /= sizeof(vertex);
     }
-
+    
     void vertexarray::create(const std::vector<vertex>& vertices, const std::vector<unsigned int>& indices) {
         destroy();
-
+    
         GLCALL(glGenVertexArrays(1, &vaoID));
         GLCALL(glBindVertexArray(vaoID));
         
         GLCALL(glGenBuffers(1, &vboID));
         GLCALL(glBindBuffer(GL_ARRAY_BUFFER, vboID));
         GLCALL(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertex), &vertices[0], GL_STATIC_DRAW));
-
+    
         GLCALL(glGenBuffers(1, &iboID));
         GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID));
         GLCALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW));
-
+    
         GLCALL(glEnableVertexAttribArray(0));
         GLCALL(glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)0));
         GLCALL(glEnableVertexAttribArray(1));
@@ -71,7 +71,7 @@ namespace fr::renderer {
         GLCALL(glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(sizeof(float) * 6)));
         GLCALL(glEnableVertexAttribArray(3));
         GLCALL(glVertexAttribPointer(3, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (void*)(sizeof(float) * 9)));
-
+    
         GLCALL(glBindVertexArray(0));
         GLCALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
         GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
@@ -90,15 +90,15 @@ namespace fr::renderer {
             iboID = 0;
         }
     }
-
+    
     void vertexarray::bind() const {
         GLCALL(glBindVertexArray(vaoID));
     }
-
+    
     void vertexarray::unbind() const {
         GLCALL(glBindVertexArray(0));
     }
-
+    
     void vertexarray::drawelements(GLenum mode = GL_TRIANGLES) {
         GLCALL(glBindVertexArray(VAO));
 		GLCALL(glDrawElements(mode, indicesCount, GL_UNSIGNED_INT, 0));
@@ -110,12 +110,12 @@ namespace fr::renderer {
 		GLCALL(glDrawArrays(mode, 0, vertexCount));
 		GLCALL(glBindVertexArray(0));
     }
-
+    
     void vertexarray::pushattribute(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* offset) {
         GLCALL(glVertexAttribPointer(index, size, type, normalized, stride, offset));
         GLCALL(glEnableVertexAttribArray(index));
     }
-
+    
     void vertexarray::pushattribute(GLuint index, GLint size, GLsizei stride, GLvoid* ptr) {
 		GLCALL(glEnableVertexAttribArray(index));
 		 GLCALL(glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, size, ptr));

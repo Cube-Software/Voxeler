@@ -1,5 +1,10 @@
+.vs/
+.vscode/
 build/*
 CMakeFiles/*
 CMakeChache.txt
 cmake_install.cmake
 Makefile
+Voxeler.dir/
+x64/
+Debug/

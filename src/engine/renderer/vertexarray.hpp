@@ -38,25 +38,25 @@ namespace fr::renderer {
         vertexarray(vertexarray&&) = delete;
         vertexarray& operator=(const vertexarray&) = delete;
         vertexarray& operator=(vertexarray&&) = delete;
-
+        
         vertexarray(const std::vector<vertex>& vertices, const std::vector<GLuint>& indices);
         vertexarray(const std::vector<vertex>& vertices);
-
+        
         vertexarray(vertex* vertices, GLsizei vSize, GLuint* indices=nullptr, GLsizei iSize=0);
         ~vertexarray();
-
+        
         void bind() const;
         void unbind() const;
-
+        
         void drawelements(GLenum mode = GL_TRIANGLE_STRIP) const;
         void drawarrays(GLenum mode = GL_TRIANGLES) const;
-
+        
         void pushattribute(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLsizei offset) const;
         void pushattribute(GLuint index, GLint size, GLsizei stride, GLvoid* ptr) const;
-
+        
         void create(const std::vector<vertex>& vertices, const std::vector<unsigned int>& indices) const;
         void destroy() const;
-
+        
         const GLuint GetVaoID() const {
             return vaoID;
         }
@@ -64,15 +64,15 @@ namespace fr::renderer {
         const GLuint GetVboID() const {
             return vboID;
         }
-
+        
         const GLuint GetEboID() const {
             return eboID;
         }
-
+        
         const GLsizei GetVertexCount() const {
             return vertexCount;
         }
-
+        
         const GLsizei GetIndicesCount() const {
             return indicesCount;
         }

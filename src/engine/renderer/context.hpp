@@ -10,63 +10,29 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef FR_WINDOW_HPP
-#define FR_WINDOW_HPP
+#ifndef FR_CONTEXT_HPP
+#define FR_CONTEXT_HPP
 
 #include "../fr.hpp"
-#include "../math/vectors.hpp"
-#include "../core/deque.hpp"
-
-#include <stdlib.h>
+#include "window.hpp"
 
 namespace fr::renderer {
-	class frwindow;
+    class frcontext {
+        public:
+            frcontext() : _isVsync(false) { }
+            ~frcontext() { }
 
-	struct frPoint {
-		int x, y;
-	};
+            virtual void SetCurrent(frwindow* curr) = 0;
+            virtual void MakeCurrent() = 0;
+            virtual void ReleaseCurrent() = 0;        
+            virtual void SwapBuffers() = 0;
+            virtual void SetVsync(bool vsync) = 0;
+            bool IsVsync() const { return _isVsync; }
 
-	// g means global
-	static struct
-	{
-		core::frdeque<frwindow*> container;
-	} g_WindowsManager;
-
-	class frWindowsManager
-	{
-		public:
-			static void PushWindow(frwindow* window);
-			static frwindow* FindFromNativePointer(void* handle);
-			static void EraseWindow(frwindow* wnd);
-
-			static void PollEvents();
-			static void Initialize();
-	};
-
-	class frwindow {
-		public:
-			frwindow() : _isRunning(true) { frWindowsManager::PushWindow(this); }
-			~frwindow() { }
-
-			virtual void Initialize(const char* title, const frPoint& dimension) = 0;
-			virtual void* GetNativeHandle() const = 0;
-			void Terminate() {
-				_isRunning = false;
-#if defined(FR_PLATFORM_WINDOWS)
-				::PostQuitMessage(0);
-#elif defined(FR_PLATFORM_LINUX)
-				exit(0);
-#endif
-			}
-
-			frPoint GetDimension() const { return _Dimension; }
-			bool IsRunning() const { return _isRunning; }
-
-			static frwindow* Create();
-		protected:
-			bool _isRunning;
-			frPoint _Dimension;
-	};
+            static frcontext* Create();
+        protected:
+            bool _isVsync;
+    };
 }
 
 #endif

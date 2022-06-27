@@ -13,15 +13,42 @@
 #define FR_STRING_HPP
 
 // string class made by Yavuz
+// very basic string class
 
 #include "memory.hpp"
+
+inline int fr_strcmp(const char* s1, const char* s2) {
+    const char* s_1 = s1;
+    const char* s_2 = s2;
+    while (*s_1 && *s_2) {
+        ++s_1;
+        ++s_2;
+    }
+
+    int cmp = *s_1 - *s_2;
+    int abs_cmp = cmp < 0 ? -cmp : cmp;
+    cmp /= cmp == 0 ? 1 : abs_cmp;
+    return cmp;
+}
+
+inline size_t fr_strlen(const char* s) {
+    size_t len = 0;
+    do {
+        ++len;
+    } while (s[len]);
+    return len;
+}
+
+inline void from_str(const char* src, wchar_t* dst) {
+    while ((*(dst++) = (wchar_t)*(src++)) != 0);
+    *dst = 0;
+}
 
 namespace fr::core{
 class string {
     private:
     char* data;
     size_t size;
-    size_t capacity;
 
     public:
         string(const char* str) { string::operator=(str); }
@@ -30,10 +57,11 @@ class string {
         string(char c) { string::operator=(c); }
 
         void operator=(const char* str) {
-            data = (char*)malloc(fr_strlen(str));
-            fr_memcpy(data, str, fr_strlen(str) + 1);
-            data[fr_strlen(str)] = '\0';
-            size = fr_strlen(str);
+            size_t sz = fr_strlen(str);
+            data = (char*)fr_alloc(sz + 1, 16);
+            fr_memcpy(data, str, sz);
+            data[sz] = 0;
+            size = sz;
         }
         void operator=(const string& other) {
             string::operator=(other.data);
@@ -43,7 +71,7 @@ class string {
         }
 
         void operator=(char c) {
-            string::operator=(Makestring(c));
+            string::operator=(&c);
         }
 
         bool operator==(const char* str) {
@@ -53,23 +81,43 @@ class string {
             return fr_strcmp(data, str.data) == 0;
         }
         bool operator==(char c) {
-            return fr_strcmp(data, Makestring(c)) == 0;
+            return fr_strcmp(data, &c) == 0;
         }
         bool operator!=(const char* str) {
-            return fr_strcmp(data, str);
+            return fr_strcmp(data, str) != 0;
         }
 
         bool operator!=(const string& str) {
-            return fr_strcmp(data, str.data);
+            return fr_strcmp(data, str.data) != 0;
         }
         bool operator!=(char c) {
-            return fr_strcmp(data, Makestring(c));
+            return fr_strcmp(data, &c) != 0;
+        }
+        void Append(const char* str) {
+            size_t sz = fr_strlen(str);
+            const size_t tmp = size;
+            Resize(sz + tmp);
+            fr_memcpy(data + tmp, str, sz);
+            
         }
         void Append(char c) {
-            Append(Makestring(c));
+            Append(&c);
         }
         void Append(const string& other) {
             Append(other.data);
+        }
+
+        void Resize(size_t _size) {
+            if (size != _size) {
+                if (size == 0)
+                    data = (char*)fr_alloc(_size + 1, 16);
+                else
+                    data = (char*)fr_realloc(data, _size + 1, 16);
+
+                size = _size;
+            }
+
+            data[_size = 0];
         }
 
         size_t Size() const {
@@ -80,3 +128,6 @@ class string {
         }
     };
 }
+
+#endif
+

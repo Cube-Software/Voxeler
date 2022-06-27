@@ -2,8 +2,8 @@
 add_library(glfw ${GLFW_LIBRARY_TYPE}
                  "${GLFW_SOURCE_DIR}/include/GLFW/glfw3.h"
                  "${GLFW_SOURCE_DIR}/include/GLFW/glfw3native.h"
-                 internal.h platform.h mappings.h
-                 context.c init.c input.c monitor.c platform.c vulkan.c window.c
+                 internal.h mappings.h
+                 context.c init.c input.c monitor.c vulkan.c window.c
                  egl_context.c osmesa_context.c null_platform.h null_joystick.h
                  null_init.c null_monitor.c null_window.c null_joystick.c)
 
@@ -13,7 +13,7 @@ if (APPLE)
     target_sources(glfw PRIVATE cocoa_time.h cocoa_time.c posix_thread.h
                                 posix_module.c posix_thread.c)
 elseif (WIN32)
-    target_sources(glfw PRIVATE win32_time.h win32_thread.h win32_module.c
+    target_sources(glfw PRIVATE
                                 win32_time.c win32_thread.c)
 else()
     target_sources(glfw PRIVATE posix_time.h posix_thread.h posix_module.c

@@ -439,12 +439,6 @@ include(CMakePackageConfigHelpers)
 # Note: PROJECT_VERSION is used as a VERSION
 write_basic_package_version_file("${VERSION_CONFIG}" COMPATIBILITY SameMajorVersion)
 
-configure_package_config_file(
-    ${CMAKE_CONFIG_TEMPLATE_FILE}
-    "${PROJECT_CONFIG}"
-    INSTALL_DESTINATION "${CONFIG_INSTALL_DIR}"
-)
-
 install(
     FILES "${PROJECT_CONFIG}" "${VERSION_CONFIG}"
     DESTINATION "${CONFIG_INSTALL_DIR}"

@@ -16,6 +16,8 @@
 
 #include "../fr.hpp"
 
+#include <malloc.h>
+
 namespace fr {
 	inline void* fr_memcpy(void* dst, const void* src, size_t size) {
 		FRuchar* byteDst = (FRuchar*)dst;
@@ -47,6 +49,27 @@ namespace fr {
 			--count;
 		}
 		return false;
+	}
+
+	inline void* fr_alloc(size_t size, size_t alignment) {
+#if defined(FR_PLATFORM_WINDOWS)
+		return _aligned_malloc(size, alignment);
+#elif defined(FR_PLATFORM_LINUX)
+#endif
+	}
+
+	inline void* fr_realloc(void* block, size_t size, size_t alignment) {
+#if defined(FR_PLATFORM_WINDOWS)
+		return _aligned_realloc(block, size, alignment);
+#elif defined(FR_PLATFORM_LINUX)
+#endif
+	}
+
+	inline void fr_free(void* block) {
+#if defined(FR_PLATFORM_WINDOWS)
+		_aligned_free(block);
+#elif defined(FR_PLATFORM_LINUX)
+#endif
 	}
 }
 

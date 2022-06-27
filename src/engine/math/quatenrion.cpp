@@ -36,25 +36,25 @@ namespace fr::math {
         (*this).w = HalfCos;
     }
 
-    Quaternion Quaternion::operator=(Quaternion q) { x = q.x; y = q.y; z = q.z; w = q.w; }
-    Quaternion Quaternion::operator+(Quaternion q) { x + q.x; y + q.y; z + q.z; w + q.w; }
-    Quaternion Quaternion::operator-(Quaternion q) { x - q.x; y - q.y; z - q.z; w - q.w; }
-    Quaternion Quaternion::operator/(Quaternion q) { x / q.x; y / q.y; z / q.z; w / q.w; }
-    Quaternion Quaternion::operator*(Quaternion q) { x * q.x; y * q.y; z * q.z; w * q.w; }
-    Quaternion Quaternion::operator+=(Quaternion q) { x += q.x; y += q.y; z += q.z; w += q.w; }
-    Quaternion Quaternion::operator-=(Quaternion q) { x -= q.x; y -= q.y; z -= q.z; w -= q.w; }
-    Quaternion Quaternion::operator/=(Quaternion q) { x /= q.x; y /= q.y; z /= q.z; w /= q.w; }
-    Quaternion Quaternion::operator*=(Quaternion q) { x *= q.x; y *= q.y; z *= q.z; w *= q.w; }
-
-    Quaternion Quaternion::operator=(float q) { x = q; y = q; z = q; w = q; }
-    Quaternion Quaternion::operator+(float q) { x + q; y + q; z + q; w + q; }
-    Quaternion Quaternion::operator-(float q) { x - q; y - q; z - q; w - q; }
-    Quaternion Quaternion::operator/(float q) { x / q; y / q; z / q; w / q; }
-    Quaternion Quaternion::operator*(float q) { x * q; y * q; z * q; w * q; }
-    Quaternion Quaternion::operator+=(float q) { x += q; y += q; z += q; w += q; }
-    Quaternion Quaternion::operator-=(float q) { x -= q; y -= q; z -= q; w -= q; }
-    Quaternion Quaternion::operator/=(float q) { x /= q; y /= q; z /= q; w /= q; }
-    Quaternion Quaternion::operator*=(float q) { x *= q; y *= q; z *= q; w *= q; }
+    Quaternion Quaternion::operator=(Quaternion q) { x = q.x; y = q.y; z = q.z; w = q.w; return *this; }
+    Quaternion Quaternion::operator+(Quaternion q) { x + q.x; y + q.y; z + q.z; w + q.w; return *this; }
+    Quaternion Quaternion::operator-(Quaternion q) { x - q.x; y - q.y; z - q.z; w - q.w; return *this; }
+    Quaternion Quaternion::operator/(Quaternion q) { x / q.x; y / q.y; z / q.z; w / q.w; return *this; }
+    Quaternion Quaternion::operator*(Quaternion q) { x * q.x; y * q.y; z * q.z; w * q.w; return *this; }
+    Quaternion Quaternion::operator+=(Quaternion q) { x += q.x; y += q.y; z += q.z; w += q.w; return *this; }
+    Quaternion Quaternion::operator-=(Quaternion q) { x -= q.x; y -= q.y; z -= q.z; w -= q.w; return *this; }
+    Quaternion Quaternion::operator/=(Quaternion q) { x /= q.x; y /= q.y; z /= q.z; w /= q.w; return *this; }
+    Quaternion Quaternion::operator*=(Quaternion q) { x *= q.x; y *= q.y; z *= q.z; w *= q.w; return *this; }
+              
+    Quaternion Quaternion::operator=(float q) { x = q; y = q; z = q; w = q; return *this; }
+    Quaternion Quaternion::operator+(float q) { x + q; y + q; z + q; w + q; return *this; }
+    Quaternion Quaternion::operator-(float q) { x - q; y - q; z - q; w - q; return *this; }
+    Quaternion Quaternion::operator/(float q) { x / q; y / q; z / q; w / q; return *this; }
+    Quaternion Quaternion::operator*(float q) { x * q; y * q; z * q; w * q; return *this; }
+    Quaternion Quaternion::operator+=(float q) { x += q; y += q; z += q; w += q; return *this; }
+    Quaternion Quaternion::operator-=(float q) { x -= q; y -= q; z -= q; w -= q; return *this; }
+    Quaternion Quaternion::operator/=(float q) { x /= q; y /= q; z /= q; w /= q; return *this; }
+    Quaternion Quaternion::operator*=(float q) { x *= q; y *= q; z *= q; w *= q; return *this; }
 
     
     void Quaternion::normalize() {

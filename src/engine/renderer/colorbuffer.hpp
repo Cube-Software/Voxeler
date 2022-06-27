@@ -21,7 +21,7 @@ namespace fr::renderer{
         colorbuffer() : bufferID(0), textureID(0) {}
         colorbuffer(GLsizei width, GLsizei height);
         ~colorbuffer();
-
+        
         void setsize(GLsizei width, GLsizei height);
         void bind();
         void unbind();
@@ -30,7 +30,7 @@ namespace fr::renderer{
         const GLuint TexID() const {
             return textureID;
         }
-
+        
         const GLuint GetID() const {
             return textureID;
         }

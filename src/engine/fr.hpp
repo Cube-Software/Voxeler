@@ -52,11 +52,16 @@
 #include <tinyxml2.h>
 
 #if defined(_WIN32)
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
 #include <windows.h>
 #define DLLAPI __declspec(dllexport)
+#define FR_PLATFORM_WINDOWS
 #elif defined(__linux__)
 #include <bits/stdc++.h>
 #define DLLAPI
+#define FR_PLATFORM_LINUX
 #else
 #warning Not Supported Platform!
 #endif

@@ -23,7 +23,7 @@ namespace fr::renderer {
         Shader() : program(0) {}
         Shader(const GLuint id) : program(id) {}
         ~Shader() { glDeleteProgram(program); }
-
+        
         void bind();
         void unbind();
         void setuniform(const GLchar* uName, GLint value);
@@ -37,7 +37,7 @@ namespace fr::renderer {
         void setuniform(const GLchar* uName, const GLfloat* mtx);
         void setuniform(const GLchar* uName, const math::Matrix4& mtx);
         void setsample2d(const GLchar* uName, GLuint tex2d, GLint unit = 0);
-
+        
         GLuint getuniform(const char* name);
         GLuint GetProgram() { return program; }
         

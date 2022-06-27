@@ -21,16 +21,16 @@ namespace fr::renderer{
         depthbuffer() : bufferID(0), depthMapID(0) { }
         depthbuffer(GLsizei width, GLsizei height);
         ~depthbuffer();
-
+        
         void setsize(GLsizei width, GLsizei height);
         void bind();
         void unbind();
         void clear();
-
+        
         const GLuint GetMapID() const {
             return depthMapID;
         }
-
+        
         const GLuint GetBufferID() const {
             return depthMapID;
         }

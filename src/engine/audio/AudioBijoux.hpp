@@ -163,7 +163,7 @@ namespace fr::audio
 
 			}
 
-			ALuint loadSound(const char path[]){
+			ALuint loadSound(const std::string& path){
 				ALenum format;
 				SNDFILE *sndFile;
 				SF_INFO sfInfo;
@@ -172,7 +172,7 @@ namespace fr::audio
 				ALsizei numBytes;
 
 				// Try to open and decode the passed file path
-				sndFile = sf_open(path, SFM_READ, &sfInfo);
+				sndFile = sf_open(path.c_str(), SFM_READ, &sfInfo);
 				if(!sndFile)
 					voxelauxLogToFile("Couldn't open file" + path, 2);
 				else
@@ -193,7 +193,7 @@ namespace fr::audio
 					voxelauxLogToFile("Unknown # of channels.", 2);
 				}
 
-				memoryBuffer = malloc((size_t)(sfInfo.frames * sfInfo.channels) * sizeof(short));
+				memoryBuffer = (short*)malloc((size_t)(sfInfo.frames * sfInfo.channels) * sizeof(short));
 
 				numFrames = sf_readf_short(sndFile, memoryBuffer, sfInfo.frames);
 				numBytes = (ALsizei)(numFrames * sfInfo.channels) * (ALsizei)sizeof(short);
@@ -219,7 +219,7 @@ namespace fr::audio
 				else
 					voxelauxLogToFile("All good.", 0);
 			}
-	}
+	};
 }
 
 #endif
