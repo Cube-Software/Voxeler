@@ -14,7 +14,6 @@
 #include "../core/string.hpp"
 
 namespace fr::renderer {
-<<<<<<< HEAD
     void frWindowsManager::PushWindow(frwindow* window) { g_WindowsManager.container.push_back(window); }
     frwindow* frWindowsManager::FindFromNativePointer(void* handle) {
         frwindow* res = nullptr;
