@@ -30,7 +30,7 @@ namespace fr::renderer{
         void clear();
         
         void blit_to(GLuint targetbuffID);
-    }
+    };
 }
 
 #endif

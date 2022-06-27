@@ -132,32 +132,8 @@ namespace fr::renderer {
 #endif
     // because platform window classes name is same
     frwindow* frwindow::Create() {
-        return new frWindowImpl();
+    #if defined(FR_PLATFORM_WINDOWS)
+    return new frWindowImpl();
+    #endif
     }
-=======
-	frwindow::frwindow(const char* title, math::Vector2 size) : Size(size) {
-        if (!glfwInit())
-            return;
-        
-        window = glfwCreateWindow(size.x, size.y, title, NULL, NULL);
-        glfwMakeContextCurrent(window);
-        if (!window) glfwTerminate();
-        
-        #if defined(FR_GLEW)
-        GLenum err = glewInit();
-		if (GLEW_OK != err) { fprintf(stderr, "Error: %s\n", glewGetErrorString(err)); }
-        #elif defined(FR_GLAD)
-        assert(gladLoadGLLoader((GLADloadproc)glfwGetProcAddress));
-        #endif
-
-        glViewport(0, 0, size.x, size.y);
-        while (glfwWindowShouldClose(window) == 0) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            glfwSwapBuffers(window);
-            glfwPollEvents();
-        }
-        glfwTerminate();
-        return;
-	}
->>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
 }
