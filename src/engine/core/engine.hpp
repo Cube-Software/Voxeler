@@ -21,7 +21,7 @@ namespace fr::engine
 {
 
 /* audio stuff */
-//static audio::AudioVoxelaux& Audio;
+static audio::AudioVoxelaux& Audio;
 
 /* event stuff */
 static events::EventSystem& Events = events::EventSystem::Ref();
