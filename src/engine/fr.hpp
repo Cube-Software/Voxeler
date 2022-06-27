@@ -32,24 +32,7 @@
 #include <functional>
 #include <filesystem>
 #include <unordered_map>
-
-/* glew */
-#include <GL/glew.h>
-/* glfw */
-#include <GLFW/glfw3.h>
-/* openal-soft */
-#include <AL/al.h>
-#include <AL/alc.h>
-
 #include <stdlib.h>
-#include <sndfile.h>
-/* assimp */
-#include <assimp/scene.h>
-#include <assimp/Importer.hpp>
-#include <assimp/pbrmaterial.h>
-#include <assimp/postprocess.h>
-/* tiny xml */
-#include <tinyxml2.h>
 
 #if defined(_WIN32)
 #ifndef WIN32_LEAN_AND_MEAN
@@ -57,14 +40,36 @@
 #endif
 #include <windows.h>
 #define DLLAPI __declspec(dllexport)
+<<<<<<< HEAD
 #define FR_PLATFORM_WINDOWS
+=======
+#define FR_GLAD
+>>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
 #elif defined(__linux__)
 #include <bits/stdc++.h>
+#define FR_GLEW
 #define DLLAPI
 #define FR_PLATFORM_LINUX
 #else
 #warning Not Supported Platform!
 #endif
+
+#if defined(FR_GLEW)
+/* glew */
+#include <GL/glew.h>
+#elif defined(FR_GLAD)
+/*glad */
+#include <glad/glad.h>
+#endif
+/* glfw */
+#include <GLFW/glfw3.h>
+/* openal-soft */
+#include <AL/al.h>
+#include <AL/alc.h>
+/* libsndfile */
+#include <sndfile.h>
+/* tiny xml */
+#include <tinyxml2.h>
 
 #ifdef _WIN32
 #define ASSERT(boolean) if (!(boolean)) __debugbreak();

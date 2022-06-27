@@ -20,17 +20,18 @@
 
 namespace fr::ecs {
 	class EntityManager {
-
-	public:		
-		~EntityManager() = default;
-		EntityManager(const EntityManager&) = delete;
-		EntityManager& operator=(const EntityManager&) = delete;
-
-		static EntityManager& Ref() {
-			static EntityManager reference;
-			return reference;
+	public:				
+		EntityManager() : entityCount(0), componentArrays({}) {
+			for (EntityID entity = 0; entity < MAX_ENTITY_COUNT; entity++) {
+				availableEntities.push(entity);
+			}
 		}
-
+	
+		~EntityManager() = default;
+		static EntityManager& Ref() {
+			static EntityManager ref;
+			return ref;
+		}
 		void Start() {
 			for (auto& system : activeSystems) {
 				system->Start();
@@ -195,11 +196,6 @@ namespace fr::ecs {
 		}
 
 	private:
-		EntityManager() : entityCount(0), componentArrays({}) {
-			for (EntityID entity = 0; entity < MAX_ENTITY_COUNT; entity++) {
-				availableEntities.push(entity);
-			}
-		}
 
 		void UpdateEntityTargetSystems(EntityID entity) {
 			for (auto system : systems) {
@@ -266,8 +262,6 @@ namespace fr::ecs {
 		std::set<std::shared_ptr<ICompList>> componentArrays;
 		std::unordered_map<EntityID, Signature> entitySignatures;
 	};
-
-	static EntityManager& Manager = ECS::EntityManager::Ref();
 }
 
 #endif

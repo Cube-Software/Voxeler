@@ -13,17 +13,26 @@
 #include "vertexarray.hpp"
 
 namespace fr::renderer {
+<<<<<<< HEAD
     vertexarray::vertexarray() : vaoID(0), vboID(0), iboID(0) { }
     
     vertexarray::vertexarray(const std::vector<vertex>& vertices, const std::vector<unsigned int>& indices) : vaoID(0), vboID(0), iboID(0) {
+=======
+    vertexarray::vertexarray(const std::vector<vertex>& vertices, const std::vector<unsigned int>& indices) : vaoID(0), vboID(0), eboID(0) {
+>>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
         create(vertices, indices);
     }
     
     vertexarray::~vertexarray() {
         destroy();
     }
+<<<<<<< HEAD
     
     void vertexarray::vertexarray(vertex* vertices, GLsizei vSize, GLuint* indices=nullptr, GLsizei iSize=0) : indicesCount(iSize), vertexCount(vSize) {
+=======
+
+    vertexarray::vertexarray(vertex* vertices, GLsizei vSize, GLuint* indices=nullptr, GLsizei iSize=0) : indicesCount(iSize), vertexCount(vSize) {
+>>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
             glGenVertexArrays(1, &vaoID);
             glGenBuffers(1, &vboID);
             glGenBuffers(1, &eboID);
@@ -32,21 +41,26 @@ namespace fr::renderer {
             glBindBuffer(GL_ARRAY_BUFFER, vboID);
             glBufferData(GL_ARRAY_BUFFER, vertexCount * sizeof(vertex), vertices, GL_STATIC_DRAW);
             
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-            glBufferData(GL_ELEMENT_ARRAY_BUFFER, numOfIndices * sizeof(GLuint), indices, GL_STATIC_DRAW);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER, indicesCount * sizeof(GLuint), indices, GL_STATIC_DRAW);
             
             // Positions
             glEnableVertexAttribArray(0);
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)0);
             // Normals
             glEnableVertexAttribArray(1);
-            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)offsetof(vertex, Normal));
+            glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)offsetof(vertex, normal));
             // Texcoords
             glEnableVertexAttribArray(2);
+<<<<<<< HEAD
             glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)offsetof(vertex, TexCoords));
     
+=======
+            glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), (GLvoid*)offsetof(vertex, coords));
+
+>>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
             glBindVertexArray(0);
-            numOfVertices /= sizeof(vertex);
+            vertexCount /= sizeof(vertex);
     }
     
     void vertexarray::create(const std::vector<vertex>& vertices, const std::vector<unsigned int>& indices) {
@@ -58,9 +72,15 @@ namespace fr::renderer {
         GLCALL(glGenBuffers(1, &vboID));
         GLCALL(glBindBuffer(GL_ARRAY_BUFFER, vboID));
         GLCALL(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertex), &vertices[0], GL_STATIC_DRAW));
+<<<<<<< HEAD
     
         GLCALL(glGenBuffers(1, &iboID));
         GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID));
+=======
+
+        GLCALL(glGenBuffers(1, &eboID));
+        GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, eboID));
+>>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
         GLCALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(unsigned int), &indices[0], GL_STATIC_DRAW));
     
         GLCALL(glEnableVertexAttribArray(0));
@@ -76,18 +96,18 @@ namespace fr::renderer {
         GLCALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
         GLCALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
     }
-    void vertexarray::destroy() {
+    void vertexarray::destroy() const{
         if (vaoID != 0) {
             GLCALL(glDeleteVertexArrays(1, &vaoID));
-            vaoID = 0;
+            //vaoID = 0;
         }
         if (vboID != 0) {
             GLCALL(glDeleteBuffers(1, &vboID));
-            vboID = 0;
+            //vboID = 0;
         }
-        if (iboID != 0) {
-            GLCALL(glDeleteBuffers(1, &iboID));
-            iboID = 0;
+        if (eboID != 0) {
+            GLCALL(glDeleteBuffers(1, &eboID));
+            //eboID = 0;
         }
     }
     
@@ -98,18 +118,25 @@ namespace fr::renderer {
     void vertexarray::unbind() const {
         GLCALL(glBindVertexArray(0));
     }
+<<<<<<< HEAD
     
     void vertexarray::drawelements(GLenum mode = GL_TRIANGLES) {
         GLCALL(glBindVertexArray(VAO));
+=======
+
+    void vertexarray::drawelements(GLenum mode = GL_TRIANGLES) const {
+        GLCALL(glBindVertexArray(vaoID));
+>>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
 		GLCALL(glDrawElements(mode, indicesCount, GL_UNSIGNED_INT, 0));
 		GLCALL(glBindVertexArray(0));
     }
         
-    void vertexarray::drawarrays(GLenum mode = GL_TRIANGLES) {
-		GLCALL(glBindVertexArray(VAO));
+    void vertexarray::drawarrays(GLenum mode = GL_TRIANGLES) const {
+		GLCALL(glBindVertexArray(vaoID));
 		GLCALL(glDrawArrays(mode, 0, vertexCount));
 		GLCALL(glBindVertexArray(0));
     }
+<<<<<<< HEAD
     
     void vertexarray::pushattribute(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void* offset) {
         GLCALL(glVertexAttribPointer(index, size, type, normalized, stride, offset));
@@ -117,6 +144,15 @@ namespace fr::renderer {
     }
     
     void vertexarray::pushattribute(GLuint index, GLint size, GLsizei stride, GLvoid* ptr) {
+=======
+
+    void vertexarray::pushattribute(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLsizei offset) const {
+        //GLCALL(glVertexAttribPointer(index, size, type, normalized, stride, offset));
+        GLCALL(glEnableVertexAttribArray(index));
+    }
+
+    void vertexarray::pushattribute(GLuint index, GLint size, GLsizei stride, GLvoid* ptr) const {
+>>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
 		GLCALL(glEnableVertexAttribArray(index));
 		 GLCALL(glVertexAttribPointer(index, size, GL_FLOAT, GL_FALSE, size, ptr));
     }

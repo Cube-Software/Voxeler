@@ -25,7 +25,16 @@ namespace fr::events{
         EventSystem() = default;
         ~EventSystem() = default;
 
+<<<<<<< HEAD
         inline void Poll(); // { glfwPollEvents(); }
+=======
+        static EventSystem& Ref() {
+            static EventSystem ref;
+            return ref;
+        }
+        
+        inline void Poll() { glfwPollEvents(); }
+>>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
 
         inline KeyBoard& KeyboardRef() { return keys; }
         inline MouseData& MouseRef() { return mouse; }

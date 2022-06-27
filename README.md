@@ -8,18 +8,18 @@ Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href=
 ## Requirements
 * CMake 3.16 +
 * G++(Linux)
-* Visual Studio 2019 and Desktop C++ Development(Windows)
+* MinGW (Windows)
 
 ## Engine's Dependencies
-* GLAD https://github.com/Dav1dde/glad
-* GLFW https://github.com/glfw/glfw
-* assimp https://github.com/assimp/assimp
-* TinyXML https://github.com/leethomason/tinyxml2
+* glad https://github.com/Dav1dde/glad
+* glfw https://github.com/glfw/glfw
+* tinyxml2 https://github.com/leethomason/tinyxml2
 * imgui https://github.com/ocornut/imgui
 * stb https://github.com/nothings/stb
 * ImGuizmo https://github.com/CedricGuillemet/ImGuizmo
 * libsndfile https://github.com/libsndfile/libsndfile
 * sol2 https://github.com/ThePhD/sol2.git
+* openal-soft https://github.com/kcat/openal-soft.git
 
 ## Installing the dependencies
 * Debian/Ubuntu ` $ sudo apt install -y libglfw3-dev libassimp-dev libtinyxml-dev libsndfile-dev libopenal-dev`
