@@ -1,7 +1,7 @@
 <p align="center">
   <img src="logo.png" width="320" height="79">
 </p>
-Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href="https://github.com/kacperks/Fractal_Engine"> Fractal Engine </a>
+Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href="https://github.com/kacperks/Fractal_Engine"> Fractal Engine BETA 3.0 </a>
 
 # Project setup
 
@@ -12,7 +12,6 @@ Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href=
 
 ## Engine's Dependencies
 * glad https://github.com/Dav1dde/glad
-* glfw https://github.com/glfw/glfw
 * tinyxml2 https://github.com/leethomason/tinyxml2
 * imgui https://github.com/ocornut/imgui
 * stb https://github.com/nothings/stb
@@ -22,8 +21,8 @@ Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href=
 * openal-soft https://github.com/kcat/openal-soft.git
 
 ## Installing the dependencies
-* Debian/Ubuntu ` $ sudo apt install -y libglfw3-dev libassimp-dev libtinyxml-dev libsndfile-dev libopenal-dev`
-* Fedora ` $ sudo dnf install assimp-devel glfw-devel tinyxml2-devel openal-soft libsndfile`
+* Debian/Ubuntu ` $ sudo apt install -y libglew-dev libtinyxml-dev libsndfile-dev libopenal-dev`
+* Fedora ` $ sudo dnf install glew-devel tinyxml2-devel openal-soft libsndfile`
 
 ## Installing CMake
 * Debian/Ubuntu ` $ sudo apt-get install cmake `
