@@ -27,6 +27,7 @@ file(GLOB_RECURSE Sources "src/app.cpp" "src/engine/**.cpp" "src/engine/**.hpp")
 add_executable(${PROJECT_NAME} ${Sources})
 
 if(UNIX AND NOT APPLE) # linux
+target_link_libraries(${PROJECT_NAME} -lX11)
 target_link_libraries(${PROJECT_NAME} -lGL)
 target_link_libraries(${PROJECT_NAME} -lGLEW)
 target_link_libraries(${PROJECT_NAME} -ltinyxml)

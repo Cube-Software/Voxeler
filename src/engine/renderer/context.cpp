@@ -39,6 +39,6 @@ namespace fr::renderer {
 #endif
     // because platform window classes name is same
     frcontext* frcontext::Create() {
-        return new frContextImpl();
+        return nullptr; // new frContextImpl();
     }
 }

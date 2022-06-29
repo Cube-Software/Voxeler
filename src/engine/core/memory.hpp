@@ -17,6 +17,7 @@
 #include "../fr.hpp"
 
 #include <malloc.h>
+#include <stdlib.h>
 
 namespace fr {
 	inline void* fr_memcpy(void* dst, const void* src, size_t size) {
@@ -51,10 +52,15 @@ namespace fr {
 		return false;
 	}
 
+	void fr_free(void* block);
+
 	inline void* fr_alloc(size_t size, size_t alignment) {
 #if defined(FR_PLATFORM_WINDOWS)
 		return _aligned_malloc(size, alignment);
 #elif defined(FR_PLATFORM_LINUX)
+		void* mem = nullptr;
+		posix_memalign(&mem, alignment, size);
+		return mem;
 #endif
 	}
 
@@ -62,6 +68,10 @@ namespace fr {
 #if defined(FR_PLATFORM_WINDOWS)
 		return _aligned_realloc(block, size, alignment);
 #elif defined(FR_PLATFORM_LINUX)
+		void* mem = fr_alloc(size, alignment); 
+		fr_memcpy(mem, block, size); 
+		fr_free(block); 
+		return mem;
 #endif
 	}
 
@@ -69,6 +79,7 @@ namespace fr {
 #if defined(FR_PLATFORM_WINDOWS)
 		_aligned_free(block);
 #elif defined(FR_PLATFORM_LINUX)
+		free(block);
 #endif
 	}
 }

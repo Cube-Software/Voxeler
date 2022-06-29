@@ -124,6 +124,105 @@ namespace fr::renderer {
 
 #define WINDOW_DEFINED
 #elif defined(FR_PLATFORM_LINUX)
+
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xcms.h>
+#include <X11/Xatom.h>
+#include <X11/XKBlib.h>
+#include <X11/Xresource.h>
+#include <X11/extensions/Xinerama.h>
+#include <X11/Xcursor/Xcursor.h>
+
+#include <stdio.h>
+
+Display* s_RootDisplay = nullptr;
+
+Atom wmDeleteWindowAtom;
+XIC ic;
+XIM im;
+
+void frWindowsManager::Initialize() 
+{ 
+    s_RootDisplay = XOpenDisplay(nullptr);
+    wmDeleteWindowAtom = XInternAtom(s_RootDisplay, "WM_DELETE_WINDOW", False);
+    im = XOpenIM(s_RootDisplay, nullptr, nullptr, nullptr);
+}
+
+class frWindowImpl : public frwindow {
+    public:
+    frWindowImpl() {}
+    ~frWindowImpl() {}
+
+    void Initialize(const char* title, const frPoint& dimension) override 
+    {
+        auto screen = XDefaultScreen(s_RootDisplay);
+        auto rootWindow = XRootWindow(s_RootDisplay, screen);
+        long visualMask = VisualScreenMask;
+        int numberOfVisuals = 0;
+
+        XVisualInfo vInfoTemplate;
+        vInfoTemplate.screen = screen;
+        XVisualInfo* visualInfo = XGetVisualInfo(s_RootDisplay, visualMask, &vInfoTemplate, &numberOfVisuals);
+        Colormap colormap = XCreateColormap(s_RootDisplay, rootWindow, visualInfo->visual, AllocNone);
+        XSetWindowAttributes windowAttributes;
+	    windowAttributes.colormap = colormap;
+	    windowAttributes.background_pixel = XBlackPixel(s_RootDisplay, screen);
+	    windowAttributes.border_pixel = XBlackPixel(s_RootDisplay, screen);
+	    windowAttributes.event_mask = KeyPressMask | KeyReleaseMask | StructureNotifyMask | ExposureMask;
+        const Window wnd = XCreateWindow(s_RootDisplay, XRootWindow(s_RootDisplay, screen), 100, 100,
+		    dimension.x, dimension.y, 0, visualInfo->depth, InputOutput,
+		    visualInfo->visual,
+		    CWBackPixel | CWBorderPixel | CWEventMask | CWColormap, &windowAttributes);
+    
+        _Handle = wnd;
+
+        XMapWindow(s_RootDisplay, _Handle);
+	    XStoreName(s_RootDisplay, _Handle, title);
+
+	    ic = XCreateIC(im, XNInputStyle, 0 | XIMPreeditNothing | XIMStatusNothing, XNClientWindow, _Handle, NULL);
+
+	    Atom protocols = wmDeleteWindowAtom;
+	    XSetWMProtocols(s_RootDisplay, _Handle, &protocols, 1);
+    }
+
+    void* GetNativeHandle() const override { return (void*)_Handle; }
+
+    private:
+    Window _Handle;
+};
+
+ void frWindowsManager::PollEvents() 
+{
+    while(XPending(s_RootDisplay) > 0) {
+        XEvent event;
+		XNextEvent(s_RootDisplay, &event);
+        
+        if (XFilterEvent(&event, 0))
+			continue;
+
+        frWindowImpl* wnd = nullptr;
+        switch (event.type)
+		{
+        case ClientMessage:
+            if ((Atom)event.xclient.data.l[0] == wmDeleteWindowAtom)
+            {
+                wnd = (frWindowImpl*)FindFromNativePointer((void*)event.xclient.window);
+                if(wnd != nullptr)wnd->Terminate();
+            }
+        
+        break;
+
+        case KeyPress:
+            const KeySym key = XLookupKeysym(&event.xkey, 0);
+            if (key == XK_Escape)
+                printf("test\n");
+
+        break;
+        }
+    }
+}
+
 #define WINDOW_DEFINED
 #endif
 
@@ -132,8 +231,6 @@ namespace fr::renderer {
 #endif
     // because platform window classes name is same
     frwindow* frwindow::Create() {
-    #if defined(FR_PLATFORM_WINDOWS)
     return new frWindowImpl();
-    #endif
     }
 }
