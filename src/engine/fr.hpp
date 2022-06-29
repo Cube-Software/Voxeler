@@ -40,11 +40,8 @@
 #endif
 #include <windows.h>
 #define DLLAPI __declspec(dllexport)
-<<<<<<< HEAD
 #define FR_PLATFORM_WINDOWS
-=======
 #define FR_GLAD
->>>>>>> 88869030bcc180b7b0dc18cd51ed25a61ad17e42
 #elif defined(__linux__)
 #include <bits/stdc++.h>
 #define FR_GLEW

@@ -14,7 +14,6 @@
 
 #include "../ecs/entitymanager.hpp"
 #include "../audio/AudioBijoux.hpp"
-#include "../events/eventsystem.hpp"
 #include "timer.hpp"
 
 namespace fr::engine
@@ -23,15 +22,12 @@ namespace fr::engine
 /* audio stuff */
 static audio::AudioVoxelaux& Audio;
 
-/* event stuff */
-static events::EventSystem& Events = events::EventSystem::Ref();
-static events::EventDispatcher& Dispatcher = events::EventDispatcher::Ref();
-
 /* timer stuff */
 static core::timer& Timer = core::timer::Ref();
 
 /* ecs stuff */
 static ecs::EntityManager& entityManager = ecs::EntityManager::Ref();
+
 }
 
 #endif
