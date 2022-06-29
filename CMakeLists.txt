@@ -7,8 +7,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 include_directories(3rdparty/glew/include)
 include_directories(3rdparty/sol2/include)
-# include_directories(3rdparty/glfw/include)
-include_directories(3rdparty/assimp/include)
 include_directories(3rdparty/tinyxml2)
 include_directories(3rdparty/openal-soft/include)
 include_directories(3rdparty/libsndfile/include)
