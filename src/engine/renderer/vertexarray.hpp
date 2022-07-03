@@ -42,14 +42,14 @@ namespace fr::renderer {
         vertexarray(const std::vector<vertex>& vertices, const std::vector<GLuint>& indices);
         vertexarray(const std::vector<vertex>& vertices);
         
-        vertexarray(vertex* vertices, GLsizei vSize, GLuint* indices=nullptr, GLsizei iSize=0);
+        vertexarray(vertex* vertices, GLsizei vSize, GLuint* indices, GLsizei iSize);
         ~vertexarray();
         
-        void bind() const;
-        void unbind() const;
+        void bind();
+        void unbind();
         
-        void drawelements(GLenum mode = GL_TRIANGLE_STRIP) const;
-        void drawarrays(GLenum mode = GL_TRIANGLES) const;
+        void drawelements(GLenum mode);
+        void drawarrays(GLenum mode);
         
         void pushattribute(GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, GLsizei offset) const;
         void pushattribute(GLuint index, GLint size, GLsizei stride, GLvoid* ptr) const;

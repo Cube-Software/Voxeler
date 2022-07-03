@@ -17,9 +17,6 @@
 
 namespace fr::renderer{
     class samplerbuffer{
-        private:
-        GLsizei width, height;
-        GLuint bufferID, renderID, textureID;
         public:
         samplerbuffer();
         samplerbuffer(GLsizei w, GLsizei h);
@@ -28,8 +25,17 @@ namespace fr::renderer{
         void bind();
         void unbind();
         void clear();
-        
+        void set_size(GLsizei w, GLsizei h);
         void blit_to(GLuint targetbuffID);
+        const GLuint get_texture_id() const { return texID; }
+        
+        private:
+        GLsizei width;
+        GLsizei height;
+        
+        GLuint buffID;
+        GLuint renderID;
+        GLuint texID;
     };
 }
 

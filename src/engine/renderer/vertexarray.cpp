@@ -11,7 +11,7 @@
 */
 
 #include "vertexarray.hpp"
-/*
+
 namespace fr::renderer {
     vertexarray::vertexarray(const std::vector<vertex>& vertices, const std::vector<unsigned int>& indices) : vaoID(0), vboID(0), eboID(0) {
         create(vertices, indices);
@@ -21,7 +21,7 @@ namespace fr::renderer {
         destroy();
     }
 
-    vertexarray::vertexarray(vertex* vertices, GLsizei vSize, GLuint* indices=nullptr, GLsizei iSize=0) : indicesCount(iSize), vertexCount(vSize) {
+    vertexarray::vertexarray(vertex* vertices, GLsizei vSize, GLuint* indices, GLsizei iSize) : indicesCount(iSize), vertexCount(vSize) {
             glGenVertexArrays(1, &vaoID);
             glGenBuffers(1, &vboID);
             glGenBuffers(1, &eboID);
@@ -90,21 +90,21 @@ namespace fr::renderer {
         }
     }
     
-    void vertexarray::bind() const {
+    void vertexarray::bind() {
         GLCALL(glBindVertexArray(vaoID));
     }
     
-    void vertexarray::unbind() const {
+    void vertexarray::unbind() {
         GLCALL(glBindVertexArray(0));
     }
 
-    void vertexarray::drawelements(GLenum mode = GL_TRIANGLES) const {
+    void vertexarray::drawelements(GLenum mode) {
         GLCALL(glBindVertexArray(vaoID));
 		GLCALL(glDrawElements(mode, indicesCount, GL_UNSIGNED_INT, 0));
 		GLCALL(glBindVertexArray(0));
     }
         
-    void vertexarray::drawarrays(GLenum mode = GL_TRIANGLES) const {
+    void vertexarray::drawarrays(GLenum mode) {
 		GLCALL(glBindVertexArray(vaoID));
 		GLCALL(glDrawArrays(mode, 0, vertexCount));
 		GLCALL(glBindVertexArray(0));
@@ -121,4 +121,3 @@ namespace fr::renderer {
     }
 }
 
-*/

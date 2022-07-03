@@ -68,6 +68,11 @@
 /* tiny xml */
 #include <tinyxml2.h>
 
+namespace fr {	
+    extern void GLClearError();
+	extern bool GLLogCall(const char* function, const char* file, int line);
+}
+
 #ifdef _WIN32
 #define ASSERT(boolean) if (!(boolean)) __debugbreak();
 #else
@@ -75,11 +80,6 @@
 #endif
 
 #define GLCALL(func) GLClearError(); func; ASSERT(fr::GLLogCall(#func, __FILE__, __LINE__))
-
-namespace fr {
-    extern void GLClearError();
-    extern bool GLLogCall(const char* function, const char* file, int line);
-}
 
 namespace fr {
 	using FRuint = uint32_t;
