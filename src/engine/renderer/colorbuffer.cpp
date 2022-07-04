@@ -23,7 +23,7 @@ namespace fr::renderer{
         GLCALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
         GLCALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureID, 0));
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-            std::cout << "ERROR::FRAMEBUFFER:: Framebuffer is not complete!" << std::endl;
+            std::cout << "FAILED TO CREATE AN FBO!!" << std::endl;
         GLCALL(glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
     colorbuffer::~colorbuffer() {

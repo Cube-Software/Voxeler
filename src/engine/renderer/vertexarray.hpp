@@ -34,10 +34,12 @@ namespace fr::renderer {
         */
     public:
         vertexarray() : vaoID(0), vboID(0), eboID(0) { }
+        /*
         vertexarray(const vertexarray&) = delete;
         vertexarray(vertexarray&&) = delete;
         vertexarray& operator=(const vertexarray&) = delete;
         vertexarray& operator=(vertexarray&&) = delete;
+        */
         
         vertexarray(const std::vector<vertex>& vertices, const std::vector<GLuint>& indices);
         vertexarray(const std::vector<vertex>& vertices);

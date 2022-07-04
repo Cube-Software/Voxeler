@@ -36,7 +36,7 @@ namespace fr::renderer {
         void setuniform(const GLchar* uName, math::Vector4 vector);
         void setuniform(const GLchar* uName, const GLfloat* mtx);
         void setuniform(const GLchar* uName, const math::Matrix4& mtx);
-        void setsample2d(const GLchar* uName, GLuint tex2d, GLint unit = 0);
+        void setuniform(const GLchar* uName, GLuint tex2d, GLint unit); // sample 2d
         
         GLuint getuniform(const char* name);
         GLuint GetProgram() { return program; }

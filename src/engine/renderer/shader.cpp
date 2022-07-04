@@ -60,4 +60,9 @@ namespace fr::renderer {
     void Shader::setuniform(const GLchar* uName, math::Vector4 vector){
         GLCALL(glUniform4f(glGetUniformLocation(program, uName), vector.x, vector.y, vector.z, vector.w));
     }
+    void Shader::setuniform(const GLchar* uName, GLuint tex2d, GLint unit){ // sample 2d
+        GLCALL(glActiveTexture(GL_TEXTURE0 + unit));
+		GLCALL(glBindTexture(GL_TEXTURE_2D, tex2d));
+		GLCALL(glUniform1i(glGetUniformLocation(program, uName), unit));
+    }
 }
