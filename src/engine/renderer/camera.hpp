@@ -10,28 +10,35 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#ifndef FR_MATH_BASIC_FUNCTIONS_HPP
-#define FR_MATH_BASIC_FUNCTIONS_HPP
+#ifndef FR_COMPNENTS_CAMERA_HPP
+#define FR_COMPNENTS_CAMERA_HPP
 
-#define PI 3.14159265359
+#include "shader.hpp"
+#include "../ecs/basecomp.hpp"
+#include "../math/math.hpp"
 
-namespace fr::math{
-    extern float sqrt(float number);
-    extern float q_rsqrt(float number);
+namespace fr::components {
+    struct Camera : public ecs::BaseComponent {
+        Camera() = default;
+        ~Camera() = default;
+        
+        Camera(float _fov, float _near, float _far) : fov(_fov), near(_near), far(_far) {}
+        Camera(float _fov, float _near, float _far, math::Vector3 pos, math::Vector3 rot) : fov(_fov), near(_near), far(_far), position(pos), rotation(rot) {}
 
-    extern float power(float base, int exp);
-    extern int fact(int n);
+        void set_uniform_vp(renderer::Shader shader, math::Vector2 display_size, float factor = 1.0f);
+        const math::Vector3 cast_ray(math::Vector2 display_size, math::Vector2 pos);
 
-    extern float abs(float number);
-    extern float abs(int number);
+        math::Matrix4 get_view(float factor = 1.0f);
+        math::Matrix4 get_projection(math::Vector2 size);
+        void normalize();
 
-    extern float cosine(int deg);
-    extern float sine(int deg);
-    extern float tangent(int deg);
-    extern float cotangent(int deg);
+        float fov = 45.0f;
+        float near = 0.1f;
+        float far = 1000.0f;
 
-    extern float rad2deg(float rad);
-    extern float deg2rad(float deg);
+        math::Vector3 position;
+        math::Vector3 rotation;
+    };
 }
 
-#endif // FR_MATH_BASIC_FUNCTIONS_HPP
+#endif // FR_COMPNENTS_CAMERA_HPP
