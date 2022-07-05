@@ -30,7 +30,6 @@ namespace fr::components {
 
         math::Matrix4 get_view(float factor = 1.0f);
         math::Matrix4 get_projection(math::Vector2 size);
-        void normalize();
 
         float fov = 45.0f;
         float near = 0.1f;
