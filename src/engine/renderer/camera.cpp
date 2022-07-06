@@ -19,4 +19,28 @@ namespace fr::components {
         shader.setuniform("View", get_view(factor));
     }
 
+    const math::Vector3 Camera::cast_ray(math::Vector2 display_size, math::Vector2 pos) {
+        math::Vector2 mouse_ndc = math::Vector2(((pos.x * 2.0f) / display_size.x) - 1.0f, ((pos.y * 2.0f) / display_size.y) - 1.0f);
+        mouse_ndc.y = -mouse_ndc.y;
+        math::Vector4 ray_clip = math::Vector4(mouse_ndc.x, mouse_ndc.y, -1.0f, 1.0f);
+        //math::Vector4 ray_eye = math::Matrix4::inverse(get_projection()) * ray_clip;
+
+    }
+
+    math::Matrix4 Camera::get_view(float factor) {
+        math::Matrix4 view = math::Matrix4();
+        view.Identity();
+        view.SetTranslation(position.x * factor, position.y * factor, position.z * factor);
+        view.SetRotationX(rotation.x);
+        view.SetRotationY(rotation.y);
+        view.SetRotationZ(rotation.z);
+        return view;
+    }
+
+    math::Matrix4 Camera::get_projection(math::Vector2 size) {
+        math::Matrix4 projection = math::Matrix4();
+        projection.Identity();
+        projection.SetPerspective(fov, size.x / size.y, near, far);
+        return projection;
+    }
 }

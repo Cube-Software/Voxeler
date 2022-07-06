@@ -53,9 +53,14 @@ namespace fr::math {
 
         float x,y,z,w;        
         
-        Vector4 Normalized() {
+        Vector4 Normalized_q_rsqrt() {
             Vector4 n = *this;
             return n * q_rsqrt(x*x + y*y + z*z + w*w);
+        }
+
+        Vector4 Normalized() {
+            Vector4 n = *this;
+            return n / Length();
         }
     }; 
 
@@ -96,9 +101,14 @@ namespace fr::math {
 
         float x,y,z;        
         
-        Vector3 Normalized() {
+        Vector3 Normalized_q_rsqrt() {
             Vector3 n = *this;
             return n * q_rsqrt(x*x + y*y + z*z);
+        }
+
+        Vector3 Normalized() {
+            Vector3 n = *this;
+            return n / Length();
         }
     }; 
 
@@ -118,7 +128,7 @@ namespace fr::math {
         const Vector2 operator-(const Vector2& other) { return Vector2(x - other.x, y - other.y); }
         const Vector2 operator-(float other) { return Vector2(x - other, y - other); }
 
-        const Vector2 operator/(const Vector2& other) { return Vector2(x / other.x, y / other.y); }
+        const Vector2 operator/(Vector2 other) { return Vector2(x / other.x, y / other.y); }
         const Vector2 operator/(float other) { return Vector2(x / other, y / other); }
 
         const Vector2 operator*(const Vector2& other) { return Vector2(x * other.x, y * other.y); }
@@ -140,9 +150,14 @@ namespace fr::math {
 
         float x,y;        
         
-        Vector2 Normalized() {
+        Vector2 Normalized_q_rsqrt() {
             Vector2 n = *this;
             return n * q_rsqrt(x*x + y*y);
+        }
+
+        Vector2 Normalized() {
+            Vector2 n = *this;
+            return n / Length();
         }
     };
 }
