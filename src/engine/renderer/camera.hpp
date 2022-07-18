@@ -25,7 +25,7 @@ namespace fr::components {
         Camera(float _fov, float _near, float _far) : fov(_fov), near(_near), far(_far) {}
         Camera(float _fov, float _near, float _far, math::Vector3 pos, math::Vector3 rot) : fov(_fov), near(_near), far(_far), position(pos), rotation(rot) {}
 
-        void set_uniform_vp(renderer::Shader shader, math::Vector2 display_size, float factor = 1.0f);
+        void set_uniform_vp(renderer::Shader shader, math::Vector2 display_size, float factor);
         const math::Vector3 cast_ray(math::Vector2 display_size, math::Vector2 pos);
 
         math::Matrix4 get_view(float factor = 1.0f);

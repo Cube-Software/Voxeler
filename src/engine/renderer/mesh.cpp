@@ -16,7 +16,6 @@ namespace fr::renderer {
     //mesh::mesh(vertex* verticies, GLsizei vsize) : m_vertexarray(verticies, vsize, nullptr, 0) {}
     mesh::mesh(vertex* verticies, GLsizei vsize, GLuint* indices, GLsizei isize) : m_vertexarray(verticies, vsize, indices, isize) {}
     mesh::mesh(vertex* verticies, GLsizei vsize, GLuint* indices, GLsizei isize, const material& material) : m_vertexarray(verticies, vsize, indices, isize), m_material(material) {}
-    mesh::mesh(const vertexarray& vao) : m_vertexarray(vao) {}
     
     void mesh::render(Shader& shader) {
         m_material.setUniforms(shader);
@@ -32,9 +31,5 @@ namespace fr::renderer {
 
     void mesh::set_material(const material& _material) {
         m_material = _material;
-    }
-    
-    const material& mesh::get_material() const {
-        return m_material;
     }
 }

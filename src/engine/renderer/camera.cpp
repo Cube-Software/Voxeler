@@ -13,7 +13,7 @@
 #include "camera.hpp"
 
 namespace fr::components {
-    void Camera::set_uniform_vp(renderer::Shader shader, math::Vector2 display_size, float factor = 1.0f) {
+    void Camera::set_uniform_vp(renderer::Shader shader, math::Vector2 display_size, float factor) {
         shader.bind();
         shader.setuniform("Projection", get_projection(display_size));
         shader.setuniform("View", get_view(factor));

@@ -58,8 +58,6 @@
 /*glad */
 #include <glad/glad.h>
 #endif
-/* glfw */
-#include <GLFW/glfw3.h>
 /* openal-soft */
 #include <AL/al.h>
 #include <AL/alc.h>
