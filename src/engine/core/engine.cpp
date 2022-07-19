@@ -1,7 +1,7 @@
 /*
-    Voxeler - open source blockchain-based Roblox-like 3D game
-    Based on Fractal Engine
+    Fractal Engine - OpenGL 3D Game Engine
     Created by CubeSoftware
+    Revised for Voxeler
 
     -------------------------------
     Copyright (c) 2021-2022 CubeSoftware
@@ -10,19 +10,21 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "engine/fr.hpp"
-#include "engine/renderer/window.hpp"
+#include "engine.hpp"
 
-using namespace fr;
-using namespace renderer;
+namespace fr::engine {
+    Engine::Engine() { }
+    Engine::~Engine() { }
 
-int main(int argc, char** argv) {
-	frwindow* wnd = frwindow::Create();
-	frWindowsManager::Initialize();
-	wnd->Initialize("test", { 800, 600 });
-	while (wnd->IsRunning()) {
-
-		frWindowsManager::PollEvents();
+    void Engine::Initialize() {
+        wnd = frwindow::Create();
+	    frWindowsManager::Initialize();
+	    wnd->Initialize("test", { 800, 600 });
+        entityManager.Initialize();
 	}
-	return 0;
+
+    void Engine::Update() {
+        frWindowsManager::PollEvents();
+        entityManager.Update();
+    }
 }

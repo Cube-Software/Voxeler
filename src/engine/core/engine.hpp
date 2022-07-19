@@ -28,6 +28,20 @@ static core::timer& Timer = core::timer::Ref();
 /* ecs stuff */
 static ecs::EntityManager& entityManager = ecs::EntityManager::Ref();
 
+class Engine {
+public:
+    Engine();
+    ~Engine();
+
+    void Initialize();
+    void Update();
+    void Render();
+
+    frwindow get_window() { return wnd; }
+private:
+    frwindow* wnd;
+}
+
 }
 
 #endif

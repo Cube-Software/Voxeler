@@ -13,6 +13,10 @@
 #ifndef VOXELER_GAME_HPP
 #define VOXELER_GAME_HPP
 
+#include "../engine/core/engine.hpp"
 
+namespace voxeler {
+    class game : fr::engine::Engine {}
+}
 
 #endif
