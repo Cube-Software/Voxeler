@@ -50,6 +50,7 @@ namespace fr::components {
 
         void Update(){
             for (auto entity : entities) {
+                /*
                 auto& camera = engine::entityManager.GetComponent<Camera>(entity);
                 auto& transform = engine::entityManager.GetComponent<transform>(entity);
 
@@ -58,6 +59,7 @@ namespace fr::components {
                 camera.rotation.x = transform.rotation.x;
                 camera.rotation.y = transform.rotation.y;
                 camera.rotation.z = transform.rotation.z;
+                */
             }
         }
 

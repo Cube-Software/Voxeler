@@ -23,9 +23,6 @@ namespace fr::engine
 /* audio stuff */
 static audio::AudioVoxelaux& Audio = audio::AudioVoxelaux::Ref();
 
-/* window stuff */
-frwindow* wnd;
-
 /* ecs stuff */
 static ecs::EntityManager& entityManager = ecs::EntityManager::Ref();
 
@@ -37,6 +34,8 @@ public:
     void Initialize();
     void Update();
     void Render();
+private:
+    renderer::frwindow* wnd;
 };
 
 }
