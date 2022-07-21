@@ -19,7 +19,7 @@
 #include "../engine/renderer/camera.hpp"
 #include "../engine/renderer/shader.hpp"
 
-class cameraMovementSystem : public fr::ecs::basesystem {
+class cameraMovementSystem : public fr::ecs::BaseSystem {
 private:
     fr::components::camera m_camera;
     fr::renderer::Shader skybox;

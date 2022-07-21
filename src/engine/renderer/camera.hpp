@@ -13,6 +13,7 @@
 #ifndef FR_COMPNENTS_CAMERA_HPP
 #define FR_COMPNENTS_CAMERA_HPP
 
+#include "../core/engine.hpp"
 #include "shader.hpp"
 #include "../ecs/basecomp.hpp"
 #include "../math/math.hpp"
@@ -37,6 +38,29 @@ namespace fr::components {
 
         math::Vector3 position;
         math::Vector3 rotation;
+    };
+
+    class CameraSystem : public ecs::BaseSystem{
+    private:
+        renderer::Shader skybox;
+        renderer::Shader shaders[1];
+
+    public:
+        CameraSystem();
+
+        void Update(){
+            for (auto entity : entities) {
+                auto& camera = engine::entityManager.GetComponent<Camera>(entity);
+                auto& transform = engine::entityManager.GetComponent<transform>(entity);
+
+                camera.position = transform.position;
+
+                camera.rotation.x = transform.rotation.x;
+                camera.rotation.y = transform.rotation.y;
+                camera.rotation.z = transform.rotation.z;
+            }
+        }
+
     };
 }
 

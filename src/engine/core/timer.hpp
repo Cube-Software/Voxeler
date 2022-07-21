@@ -16,24 +16,7 @@
 #include "../fr.hpp"
 
 namespace fr::core {
-    class timer
-    {
-    public:
-    timer() : dt(0.0f), lf(0.0f) {}
-
-    static timer& Ref() {
-		static timer ref;
-		return ref;
-	}
-
-    void tick() { dt = glfwGetTime() - lf; lf = glfwGetTime();}
-
-    inline float deltatime() { return dt; }
-
-    private:
-    float lf, dt;
-
-    };
+    class timer{ };
 }
 
 #endif
