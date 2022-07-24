@@ -17,14 +17,14 @@ namespace fr::engine {
     Engine::~Engine() { }
 
     void Engine::Initialize() {
-        wnd = frwindow::Create();
-	    frWindowsManager::Initialize();
+        wnd = renderer::frwindow::Create();
+	    renderer::frWindowsManager::Initialize();
 	    wnd->Initialize("test", { 800, 600 });
-        entityManager.Initialize();
+        entityManager.Start();
 	}
 
     void Engine::Update() {
-        frWindowsManager::PollEvents();
+        renderer::frWindowsManager::PollEvents();
         entityManager.Update();
     }
 }

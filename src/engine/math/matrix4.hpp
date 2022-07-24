@@ -13,6 +13,8 @@
 #ifndef FR_MATH_MATRIX4_HPP
 #define FR_MATH_MATRIX4_HPP
 
+#include "vectors.hpp"
+
 #include "basic_functions.hpp"
 
 #define SIZE 4

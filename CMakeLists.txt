@@ -29,6 +29,8 @@ target_link_libraries(${PROJECT_NAME} -lX11)
 target_link_libraries(${PROJECT_NAME} -lGL)
 target_link_libraries(${PROJECT_NAME} -lGLEW)
 target_link_libraries(${PROJECT_NAME} -ltinyxml)
+target_link_libraries(${PROJECT_NAME} -lopenal)
+target_link_libraries(${PROJECT_NAME} -lsndfile)
 endif()
 
 if (WIN32) # windows

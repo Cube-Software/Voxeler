@@ -37,11 +37,11 @@ namespace fr::audio
 				{
 					case 1:
 						fr::log::WarnLog("Warning from Voxelaux: " + logText + "\n");
-
+						break;
 					case 2:
 						fr::log::ErrorLog("Voxelaux has ran into the following error: " + logText + "\n");
-						
-					default:
+						break;
+					case 3:
 						fr::log::InfoLog("Voxelaux says, \"" + logText + "\"\n");
 				}
 			}
@@ -114,7 +114,7 @@ namespace fr::audio
 				alGenSources(1, &source1);
 				alGenSources(1, &musicSource);
 				alGenBuffers(1, &buffer);
-				voxelauxLogToFile("Voxelaux has been initialized", 1);
+				voxelauxLogToFile("Voxelaux has been initialized", 3);
 			}
 
 			~AudioVoxelaux()
@@ -125,7 +125,7 @@ namespace fr::audio
 				alDeleteBuffers(1, &buffer);
 				alcDestroyContext(context);
 				alcCloseDevice(device);
-				voxelauxLogToFile("Voxelaux has been destroyed", 1);
+				voxelauxLogToFile("Voxelaux has been destroyed", 3);
 			}
 
 			static AudioVoxelaux& Ref() {
