@@ -11,16 +11,19 @@
 */
 
 #include "basic_functions.hpp"
+#include "../core/random.hpp"
+
+#include <math.h>
 
 namespace fr::math {
-    float q_rsqrt(float number) {  
+    float q_rsqrt(float x) {  
         // Fast inverse square root from Quake III: Arena
         long i;
         float x2, y;
         const float threehalfs = 1.5F;
 
-        x2 = number * 0.5F;
-        y  = number;
+        x2 = x * 0.5F;
+        y  = x;
         i  = * ( long * ) &y;                      
         i  = 0x5f3759df - ( i >> 1 );               // wtf?
         y  = * ( float * ) &i;
@@ -28,50 +31,25 @@ namespace fr::math {
 
         return y;
     }
-    float sqrt(float number){ if(number > 0){ for(float factor = 0; factor < number; factor++) { if(factor*factor == number) { return factor; } } } }
 
     float rad2deg(float rad) { return rad * 180 / PI; }
     float deg2rad(float deg) { return deg * PI / 180; }
 
-    float abs(int num) { return num <= 0 ? 1 : num * fact(num - 1); }
-    float abs(float num) { return (num < 0.0f) ? -num : num; }
+    float Sqrt(float x) { return ::sqrtf(x); }
+    float Power(float x, float y) { return ::powf(x, y); }
+    float Abs(float x) { return ::fabsf(x); }
+    float Abs(int x) { return x < 0 ? (float)-x : (float)x; }
+    float Cos(float x) { return ::cosf(x); }
+    float Acos(float x) { return ::acosf(x); }
+    float Sin(float x) { return ::sinf(x); }
+    float Asin(float x) { return ::asinf(x); }
+    float Tan(float x) { return ::tanf(x); }
+    float Atan(float x) { return ::atanf(x); }
+    float Atan2(float y, float x) { return ::atan2f(y, x); }
 
-    int fact(int n) { return n <= 0 ? 1 : n * fact(n - 1); }
+    int RandomRange(int max) { return core::g_RandomDevice.get_number() % max; }
+    int RandomRange(int min, int max) { return min + core::g_RandomDevice.get_number() % (max - min); }
+    float RandomRangef(float max) { return max * float(core::g_RandomDevice.get_number() / core::g_RandomDevice.get_max_value()); }
+    float RandomRangef(float min, float max) { return min + (max - min) * float(core::g_RandomDevice.get_number() / core::g_RandomDevice.get_max_value()); }
 
-    float power(float base, int exp) {if (exp < 0) {
-		if (base == 0)
-				return -0;
-			return 1 / (base * power(base, (-exp) - 1));
-		}
-		if (exp == 0)
-			return 1;
-		if (exp == 1)
-			return base;
-		return base * power(base, exp - 1);
-    }
-
-    float sine(int deg){
-        deg %= 360;
-		float rad = deg * PI / 180;
-		float sin = 0;
-		for (int i = 0; i < 7; i++) {
-			sin += power(-1, i) * power(rad, 2 * i + 1) / fact(2 * i + 1);
-		}
-		return sin;
-    }
-
-    float cosine(int deg){
-        deg %= 360; // make it less than 360
-		float rad = deg * PI / 180;
-		float cos = 0;
-
-		int i;
-		for (i = 0; i < 7; i++) {
-			cos += power(-1, i) * power(rad, 2 * i) / fact(2 * i);
-		}
-		return cos;
-    }
-
-    float tangent(int deg) { return sine(deg) / cosine(deg); }
-    float cotangent(int deg) { return cosine(deg) / sine(deg); }
 }

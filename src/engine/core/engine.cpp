@@ -11,20 +11,30 @@
 */
 
 #include "engine.hpp"
+#include "random.hpp"
 
 namespace fr::engine {
-    Engine::Engine() { }
+    Engine::Engine(const core::string& windowName, const renderer::frPoint& dimension) : window_name(windowName), window_dimension(dimension) { }
     Engine::~Engine() { }
 
     void Engine::Initialize() {
-        wnd = renderer::frwindow::Create();
+        core::g_RandomDevice.seed();
+        engine_window = renderer::frwindow::Create();
 	    renderer::frWindowsManager::Initialize();
-	    wnd->Initialize("test", { 800, 600 });
+        engine_window->Initialize(window_name.c_str(), window_dimension);
         entityManager.Start();
 	}
 
     void Engine::Update() {
         renderer::frWindowsManager::PollEvents();
         entityManager.Update();
+    }
+
+    bool Engine::IsRunning() const {
+        return engine_window->IsRunning();
+    }
+
+    void Engine::Terminate() {
+        engine_window->Terminate();
     }
 }

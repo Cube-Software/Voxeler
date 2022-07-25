@@ -58,8 +58,8 @@ namespace fr::math {
 
     void Matrix4::SetRotationX(float x) {
         float r = deg2rad(x);
-        float c = cosine((int)r);
-        float s = sine((int)r);
+        float c = Cos(r);
+        float s = Sin(r);
 
         Matrix[1][1] = c;
         Matrix[1][2] = -s;
@@ -69,8 +69,8 @@ namespace fr::math {
 
     void Matrix4::SetRotationY(float y) {
         float r = deg2rad(y);
-        float c = cosine((int)r);
-        float s = sine((int)r);
+        float c = Cos(r);
+        float s = Sin(r);
 
         Matrix[0][0] = c;
         Matrix[0][2] = s;
@@ -80,8 +80,8 @@ namespace fr::math {
 
     void Matrix4::SetRotationZ(float z) {
         float r = deg2rad(z);
-        float c = cosine((int)r);
-        float s = sine((int)r);
+        float c = Cos(r);
+        float s = Sin(r);
 
         Matrix[0][0] = c;
         Matrix[0][1] = -s;
@@ -139,7 +139,7 @@ namespace fr::math {
     }
 
     void Matrix4::SetPerspective(float fov, float aspectRatio, float m_near, float m_far) {
-        float q = 1.0f / tangent(deg2rad(0.5f * fov));
+        float q = 1.0f / Tan(deg2rad(0.5f * fov));
         float a = q / aspectRatio;
 
         float b = (m_near + m_far) / (m_near - m_far);

@@ -24,7 +24,8 @@ namespace fr::components {
         mouse_ndc.y = -mouse_ndc.y;
         math::Vector4 ray_clip = math::Vector4(mouse_ndc.x, mouse_ndc.y, -1.0f, 1.0f);
         //math::Vector4 ray_eye = math::Matrix4::inverse(get_projection()) * ray_clip;
-
+        //we must return value
+        return math::Vector3();
     }
 
     math::Matrix4 Camera::get_view(float factor) {
@@ -40,7 +41,7 @@ namespace fr::components {
     math::Matrix4 Camera::get_projection(math::Vector2 size) {
         math::Matrix4 projection = math::Matrix4();
         projection.Identity();
-        projection.SetPerspective(fov, size.x / size.y, near, far);
+        projection.SetPerspective(c_fov, size.x / size.y, c_near, c_far);
         return projection;
     }
 }

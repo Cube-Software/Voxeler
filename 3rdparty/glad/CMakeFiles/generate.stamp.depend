@@ -1,0 +1,7 @@
+# CMake generation dependency list for this directory.
+C:/cmake/share/cmake-3.21/Modules/FindPackageHandleStandardArgs.cmake
+C:/cmake/share/cmake-3.21/Modules/FindPackageMessage.cmake
+C:/cmake/share/cmake-3.21/Modules/FindPython.cmake
+C:/cmake/share/cmake-3.21/Modules/FindPython/Support.cmake
+C:/dev/Voxeler/3rdparty/glad/CMakeLists.txt
+C:/dev/Voxeler/CMakeFiles/cmake.verify_globs

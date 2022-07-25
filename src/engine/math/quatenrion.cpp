@@ -28,8 +28,8 @@ namespace fr::math {
     }
 
     Quaternion::Quaternion(Vector3 axis, float angle) {
-        float HalfSin = sine(angle / 2);
-        float HalfCos = cosine(angle / 2);
+        float HalfSin = Sin(angle / 2);
+        float HalfCos = Cos(angle / 2);
         (*this).x = axis.x * HalfSin;
         (*this).y = axis.y * HalfSin;
         (*this).z = axis.z * HalfSin;
@@ -72,7 +72,7 @@ namespace fr::math {
         float scalar = w*w;
         float img = x*x + y*y + z*z;
 
-        return sqrt(scalar + img);
+        return Sqrt(scalar + img);
     }
 
     void Quaternion::Convert2Unit() {
@@ -81,11 +81,11 @@ namespace fr::math {
         y * q_rsqrt(x*x + y*y + z*z);  // Fast Inverse Square root :P
         z * q_rsqrt(x*x + y*y + z*z);
 
-        w=cosine(angle*0.5);
+        w=Cos(angle*0.5);
 
-        x=x*sine(angle*0.5);
-        y=y*sine(angle*0.5);
-        z=z*sine(angle*0.5);
+        x=x*Sin(angle*0.5);
+        y=y*Sin(angle*0.5);
+        z=z*Sin(angle*0.5);
     }
 
     Quaternion Quaternion::conjugate() {

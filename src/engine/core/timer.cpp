@@ -9,28 +9,27 @@
     The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-#ifndef LOG
-#define LOG
 
-#include "../fr.hpp"
-#include "../vendor/termcolor.hpp"
+#include "timer.hpp"
 
-#include <stdio.h>
-#include <malloc.h>
-#include <stdlib.h>
-#include <string.h>
+namespace fr::core {
 
-namespace fr::log {
-		inline void ErrorLog(std::string log) { std::cout << termcolor::red << "[ERROR] " << log << termcolor::white << std::endl; }
-		inline void WarnLog(std::string log) { std::cout << termcolor::bright_magenta << "[WARN] " << log << termcolor::white << std::endl; }
-		inline void InfoLog(std::string log) {
-		#ifndef FR_BUILD
-			std::cout << "[" << termcolor::bright_green << " OK " << "] " << termcolor::white << log << std::endl; 
-		#endif
-		}
-}
-
-#define FR_INFO fr::Log::InfoLog
-#define FR_ERROR fr::Log::ErrorLog
-#define FR_WARNING fr::Log::WarnLog
+    FRuint64 timer::GetFrequency() {
+        FRuint64 res = 0;
+#if defined(FR_PLATFORM_WINDOWS)
+        QueryPerformanceFrequency((LARGE_INTEGER*)&res);
+#elif defined(FR_PLATFORM_LINUX)
 #endif
+        return res;
+    }
+
+    FRuint64 timer::GetCounter() {
+        FRuint64 res = 0;
+#if defined(FR_PLATFORM_WINDOWS)
+        QueryPerformanceCounter((LARGE_INTEGER*)&res);
+#elif defined(FR_PLATFORM_LINUX)
+#endif
+        return res;
+    }
+
+}

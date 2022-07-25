@@ -16,6 +16,7 @@
 // very basic string class
 
 #include "memory.hpp"
+#include "deque.hpp"
 
 inline int fr_strcmp(const char* s1, const char* s2) {
     const char* s_1 = s1;
@@ -51,10 +52,19 @@ class string {
     size_t size;
 
     public:
+        string() : data(nullptr), size(0) { }
         string(const char* str) { string::operator=(str); }
         string(string&& other) { data = other.data; size = other.size; }
         string(const string& other) { string::operator=(other); }
         string(char c) { string::operator=(c); }
+
+        char& operator[](size_t index) {
+            return data[index];
+        }
+
+        const char& operator[](size_t index) const {
+            return data[index];
+        }
 
         void operator=(const char* str) {
             size_t sz = fr_strlen(str);
@@ -66,8 +76,9 @@ class string {
         void operator=(const string& other) {
             string::operator=(other.data);
         }
-        void operator=(std::string other) {
-            string::operator=(other.c_str());
+        void operator=(string&& rhs) {
+            data = rhs.data;
+            size = rhs.size;
         }
 
         void operator=(char c) {
@@ -92,6 +103,18 @@ class string {
         }
         bool operator!=(char c) {
             return fr_strcmp(data, &c) != 0;
+        }
+        void operator+=(const char* str) {
+            Append(str);
+
+        }
+
+        void operator+=(char value) {
+            Append(value);
+        }
+
+        void operator+=(const string& rhs) {
+            Append(rhs);
         }
         void Append(const char* str) {
             size_t sz = fr_strlen(str);
@@ -123,10 +146,55 @@ class string {
         size_t Size() const {
             return size;
         }
-        const char* Cstring() const {
+
+        char* Data() {
             return data;
         }
+
+        const char* c_str() const {
+            return data;
+        }
+
+        void PopBack() {
+            if (size > 0) {
+                size--;
+                data[size] = 0;
+            }
+        }
+
+        void Clear() {
+            size = 0;
+            if (data != nullptr)
+                data[size] = 0;
+        }
     };
+
+    inline string parsestring(const string& src, size_t size, size_t start)
+    {
+        string res;
+        res.Resize(size);
+        char* dst = res.Data();
+        fr_memcpy(dst, src.c_str() + start, size);
+    }
+
+    inline frdeque<string> frsplitstring(const string& src, const string& tok)
+    {
+        frdeque<string> toks;
+        int pos = 0;
+        int lst = 0;
+        while (src[pos]) 
+        {
+            if (parsestring(src, tok.Size(), (size_t)pos) == tok)
+            {
+                toks.push_back(parsestring(src, pos, pos - lst));
+                lst = pos;
+            }
+
+            ++pos;
+        }
+
+        return toks;
+    }
 }
 
 #endif

@@ -16,6 +16,7 @@
 #include "../ecs/entitymanager.hpp"
 #include "../audio/AudioBijoux.hpp"
 #include "timer.hpp"
+#include "string.hpp"
 
 namespace fr::engine
 {
@@ -28,14 +29,19 @@ static ecs::EntityManager& entityManager = ecs::EntityManager::Ref();
 
 class Engine {
 public:
-    Engine();
+    Engine(const core::string& windowName, const renderer::frPoint& dimension);
     ~Engine();
 
     void Initialize();
     void Update();
+    bool IsRunning() const;
+    void Terminate();
     void Render();
 private:
-    renderer::frwindow* wnd;
+    renderer::frPoint window_dimension;
+    renderer::frwindow* engine_window;
+    core::string window_name;
+    core::timer engine_timer;
 };
 
 }

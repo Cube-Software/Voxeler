@@ -1,19 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\dev\Voxeler\3rdparty\tinyxml2\tinyxml2.cpp">
+    <ClCompile Include="C:\dev\Voxeler\3rdparty\glad\src\glad.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\dev\Voxeler\3rdparty\tinyxml2\tinyxml2.h">
+    <ClInclude Include="C:\dev\Voxeler\3rdparty\glad\include\glad\glad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\dev\Voxeler\3rdparty\tinyxml2\CMakeLists.txt" />
+    <CustomBuild Include="C:\dev\Voxeler\3rdparty\glad\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A8B202C3-7733-3787-A8DE-18E5137D83AB}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{170CB626-7EFA-3C84-8F49-20B3D0E052B6}</UniqueIdentifier>
     </Filter>

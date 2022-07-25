@@ -16,7 +16,15 @@
 #include "../fr.hpp"
 
 namespace fr::core {
-    class timer{ };
+    class timer 
+    {
+    public:
+        FRuint64 GetFrequency();
+        FRuint64 GetCounter();
+
+        float GetElapsedTime() { }
+        float Tick() { }
+    };
 }
 
 #endif

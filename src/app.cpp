@@ -12,12 +12,14 @@
 
 #include "engine/fr.hpp"
 #include "engine/renderer/window.hpp"
+#include "engine/core/random.hpp"
+#include "engine/core/file_stream.hpp"
 
 using namespace fr;
 using namespace renderer;
 
 int main(int argc, char** argv) {
-	frwindow* wnd = frwindow::Create();
+    frwindow* wnd = frwindow::Create();
 	frWindowsManager::Initialize();
 	wnd->Initialize("test", { 800, 600 });
 	while (wnd->IsRunning()) {

@@ -23,8 +23,8 @@ namespace fr::components {
         Camera() = default;
         ~Camera() = default;
         
-        Camera(float _fov, float _near, float _far) : fov(_fov), near(_near), far(_far) {}
-        Camera(float _fov, float _near, float _far, math::Vector3 pos, math::Vector3 rot) : fov(_fov), near(_near), far(_far), position(pos), rotation(rot) {}
+        Camera(float _fov, float _near, float _far) : c_fov(_fov), c_near(_near), c_far(_far) {}
+        Camera(float _fov, float _near, float _far, math::Vector3 pos, math::Vector3 rot) : c_fov(_fov), c_near(_near), c_far(_far), position(pos), rotation(rot) {}
 
         void set_uniform_vp(renderer::Shader shader, math::Vector2 display_size, float factor);
         const math::Vector3 cast_ray(math::Vector2 display_size, math::Vector2 pos);
@@ -32,9 +32,10 @@ namespace fr::components {
         math::Matrix4 get_view(float factor = 1.0f);
         math::Matrix4 get_projection(math::Vector2 size);
 
-        float fov = 45.0f;
-        float near = 0.1f;
-        float far = 1000.0f;
+        // the variables name starts with c because near and far defined in "windows.h"
+        float c_fov = 45.0f;
+        float c_near = 0.1f;
+        float c_far = 1000.0f;
 
         math::Vector3 position;
         math::Vector3 rotation;

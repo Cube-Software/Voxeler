@@ -23,7 +23,7 @@ namespace fr::math {
         Vector4(float number) : x(number), y(number), z(number), w(number) {}
         Vector4(const Vector4& other) : x(other.x), y(other.y), z(other.z), w(other.w) {}
 
-        float Length() { return sqrt(x*x + y*y + z*z + w*w); }
+        float Length() { return Sqrt(x*x + y*y + z*z + w*w); }
 
         Vector4 operator+(const Vector4& other) { return Vector4(x + other.x, y + other.y, z + other.z, w + other.w); }
         Vector4 operator+(float other) { return Vector4(x + other, y + other, z + other, w + other); }
@@ -71,7 +71,7 @@ namespace fr::math {
         Vector3(float number) : x(number), y(number), z(number) {}
         Vector3(const Vector3& other) : x(other.x), y(other.y), z(other.z) {}
 
-        float Length() { return sqrt(x*x + y*y + z*z); }
+        float Length() { return Sqrt(x*x + y*y + z*z); }
 
         Vector3 operator+(const Vector3& other) { return Vector3(x + other.x, y + other.y, z + other.z); }
         Vector3 operator+(float other) { return Vector3(x + other, y + other, z + other); }
@@ -120,7 +120,7 @@ namespace fr::math {
         Vector2(const Vector2& other) : x(other.x), y(other.y) {}
         ~Vector2() = default;
 
-        float Length() { return sqrt(x*x + y*y); }
+        float Length() { return Sqrt(x*x + y*y); }
 
         const Vector2 operator+(const Vector2& other) { return Vector2(x + other.x, y + other.y); }
         const Vector2 operator+(float other) { return Vector2(x + other, y + other); }

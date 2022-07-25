@@ -81,6 +81,7 @@ namespace fr {
 
 namespace fr {
 	using FRuint = uint32_t;
+	using FRuint64 = unsigned long long;
 	using FRuchar = unsigned char;
 	using FRboolean = bool;
 	using FRchar = char;
