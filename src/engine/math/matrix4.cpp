@@ -151,4 +151,33 @@ namespace fr::math {
         Matrix[2][3] = -1.0f;
         Matrix[3][2] = c;
     }
+
+    static Matrix4 Matrix4::LookAt(const Vector3& camera, const Vector3& object, const Vector3& up) {
+        Matrix4 output; output.Identity();
+        Vector3 f = (object - camera).Normalized();
+        Vector3 s = f.cross(up.Normalized());
+        Vector3 u = s.cross(f);
+
+        output.Matrix[0][0] = s.x;
+        output.Matrix[1][0] = s.y;
+        output.Matrix[2][0] = s.z;
+
+        output.Matrix[0][1] = u.x;
+        output.Matrix[1][1] = u.y;
+        output.Matrix[2][1] = u.z;
+
+        output.Matrix[0][2] = -f.x;
+        output.Matrix[1][2] = -f.y;
+        output.Matrix[2][2] = -f.z;
+
+        Matrix4 translation; translation.SetTranslation(-camera.x, -camera.y, -camera.z);
+
+        return result * translation;
+    }
+
+    static Matrix4 Matrix4::Invert(const Matrix4 matrix) { 
+        float temp[16];
+
+        // WIP
+    }
 }

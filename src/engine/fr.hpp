@@ -51,13 +51,16 @@
 #warning Not Supported Platform!
 #endif
 
+/*
 #if defined(FR_GLEW)
-/* glew */
+/* glew 
 #include <GL/glew.h>
 #elif defined(FR_GLAD)
-/*glad */
+/*glad 
 #include <glad/glad.h>
 #endif
+*/
+
 /* openal-soft */
 #include <AL/al.h>
 #include <AL/alc.h>

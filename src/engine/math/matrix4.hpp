@@ -43,18 +43,8 @@ namespace fr::math {
             Matrix4 operator*(Matrix4 matrix);
             void SetOrtho(float left, float right, float bottom, float top, float m_near, float m_far);
             void SetPerspective(float fov, float aspectRatio, float m_near, float m_far);
-
-            static Matrix4 createTranslation(const Vector3 &v);
-            static Matrix4 createTranslation(float x, float y, float z);
-            static Matrix4 createScale(const Vector3 &v);
-            static Matrix4 createScale(float x, float y, float z);
-            static Matrix4 createRotationX(float a);
-            static Matrix4 createRotationY(float a);
-            static Matrix4 createRotationZ(float a);
-            static Matrix4 createRotation(float a, const Vector3& v);
-            static Matrix4 createLookAt(const Vector3& eye, const Vector3& center, const Vector3& up);
-            static Matrix4 createPerspective(float fovy, float aspect, float near, float far);
-            static Matrix4 Inverse();
+            static Matrix4 LookAt(const Vector3& camera, const Vector3& object, const Vector3& up);
+            static Matrix4 Invert(const Matrix4 matrix);
 
             float* ToPointer() {
                 return &Matrix[0][0];
@@ -64,7 +54,6 @@ namespace fr::math {
                 return &Matrix[0][0];
             }
 
-        private:
             float Matrix[SIZE][SIZE];
     };
 }

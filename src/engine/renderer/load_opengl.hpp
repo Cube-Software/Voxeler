@@ -10,35 +10,19 @@
     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#include "timer.hpp"
+#ifndef FR_TIMER_HPP
+#define FR_TIMER_HPP
 
-#ifdef FR_PLATFORM_LINUX
-#include <time.h>
-#include <unistd.h>
-#endif
+#include <glcorearb.h>
 
-namespace fr::core {
+#include "../fr.hpp"
 
-    FRuint64 timer::GetFrequency() {
-        FRuint64 res = 0;
-#if defined(FR_PLATFORM_WINDOWS)
-        QueryPerformanceFrequency((LARGE_INTEGER*)&res);
-#elif defined(FR_PLATFORM_LINUX)
-        res = 1'000'000'000;
-#endif
-        return res;
-    }
+#define FR_GL_FN(tp, nm) tp nm;
+#include "gl_load_helper.hpp"
+#undef FR_GL_FN
 
-    FRuint64 timer::GetCounter() {
-        FRuint64 res = 0;
-#if defined(FR_PLATFORM_WINDOWS)
-        QueryPerformanceCounter((LARGE_INTEGER*)&res);
-#elif defined(FR_PLATFORM_LINUX)
-        timespec tick;
-        clock_gettime(CLOCK_REALTIME, &tick);
-        res = FRuint64(tick.tv_sec) * 1000000000 + FRuint64(tick.tv_nsec);;
-#endif
-        return res;
-    }
-
+namespace fr::renderer {
+    bool InitializeOpenGL();
 }
+
+#endif

@@ -99,6 +99,8 @@ namespace fr::math {
         void operator/=(Vector3 other) { x /= other.x; y /= other.y; z /= other.z; }
         void operator/=(float other) { x /= other; y /= other; z /= other; }
 
+        Vector3 cross(const Vector3& other) { return Vector3(y * other.z - z * other.y, z * other.x - x * other.z, x * other.y - y * other.x); }
+
         float x,y,z;        
         
         Vector3 Normalized_q_rsqrt() {

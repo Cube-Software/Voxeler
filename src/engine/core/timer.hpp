@@ -19,11 +19,31 @@ namespace fr::core {
     class timer 
     {
     public:
+        timer()
+        {
+            _tick = GetCounter();
+            _lastTick = _tick;
+        }
+
         FRuint64 GetFrequency();
         FRuint64 GetCounter();
 
-        float GetElapsedTime() { }
-        float Tick() { }
+        float GetElapsedTime() 
+        {
+            return float(double(GetCounter() - _ticl) / double(GetFrequency()));
+        }
+
+        float Tick() 
+        { 
+            const FRuint64 c = GetCounter();
+            const float dt = float(double(c - _lastTick) / double(GetFrequency()));
+            _lastTick = c;
+            return dt;
+        }
+
+    private:
+        FRuint64 _tick;
+        FRuint64 _lastTick;
     };
 }
 

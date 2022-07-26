@@ -3,6 +3,8 @@
 </p>
 Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href="https://github.com/kacperks/Fractal_Engine"> Fractal Engine BETA 3.0 </a>
 
+// NOTE : for now we are working on Fractal engine's fork revised for Voxeler //
+
 # Project setup
 
 ## Requirements
