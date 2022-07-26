@@ -13,7 +13,6 @@ Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href=
 * MinGW (Windows)
 
 ## Engine's Dependencies
-* glad https://github.com/Dav1dde/glad
 * tinyxml2 https://github.com/leethomason/tinyxml2
 * imgui https://github.com/ocornut/imgui
 * stb https://github.com/nothings/stb
@@ -23,8 +22,8 @@ Voxeler is an open source blockchain-based Roblox-like 3D game based on <a href=
 * openal-soft https://github.com/kcat/openal-soft.git
 
 ## Installing the dependencies
-* Debian/Ubuntu ` $ sudo apt install -y libglew-dev libtinyxml-dev libsndfile-dev libopenal-dev`
-* Fedora ` $ sudo dnf install glew-devel tinyxml2-devel openal-soft libsndfile`
+* Debian/Ubuntu ` $ sudo apt install -y libtinyxml-dev libsndfile-dev libopenal-dev`
+* Fedora ` $ sudo dnf install tinyxml2-devel openal-soft libsndfile`
 
 ## Installing CMake
 * Debian/Ubuntu ` $ sudo apt-get install cmake `

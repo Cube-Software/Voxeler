@@ -34,32 +34,36 @@
 #include <unordered_map>
 #include <stdlib.h>
 
+/* windows */
 #if defined(_WIN32)
+
 #ifndef WIN32_LEAN_AND_MEAN
 #define WIN32_LEAN_AND_MEAN
 #endif
+
 #include <windows.h>
 #define DLLAPI __declspec(dllexport)
 #define FR_PLATFORM_WINDOWS
-#define FR_GLAD
+
+/* linux */
 #elif defined(__linux__)
-#include <bits/stdc++.h>
-#define FR_GLEW
+
+/* X11 */
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
+#include <X11/Xcms.h>
+#include <X11/Xatom.h>
+#include <X11/XKBlib.h>
+#include <X11/Xresource.h>
+#include <X11/extensions/Xinerama.h>
+#include <X11/Xcursor/Xcursor.h>
+
 #define DLLAPI
 #define FR_PLATFORM_LINUX
+
 #else
 #warning Not Supported Platform!
 #endif
-
-/*
-#if defined(FR_GLEW)
-/* glew 
-#include <GL/glew.h>
-#elif defined(FR_GLAD)
-/*glad 
-#include <glad/glad.h>
-#endif
-*/
 
 /* openal-soft */
 #include <AL/al.h>
